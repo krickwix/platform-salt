@@ -1,3 +1,5 @@
+{% set flavor_cfg = pillar['pnda_flavor']['states'][sls] %}
+
 {% set packages_server = pillar['packages_server']['base_uri'] %}
 {% set gobblin_user = "gobblin" %}
 {% set gobblin_version = pillar['gobblin']['release_version'] %}
@@ -83,6 +85,7 @@ gobblin-install_gobblin_pnda_job_file:
       kite_dataset_uri: {{ pnda_kite_dataset_uri }}
       quarantine_kite_dataset_uri: {{ pnda_quarantine_kite_dataset_uri }}
       kafka_brokers: {{ kafka_brokers }}
+      max_mappers: {{ flavor_cfg.max_mappers }}
 
 gobblin-install_gobblin_upstart_script:
   file.managed:

@@ -1,11 +1,11 @@
 {% set packages_server = pillar['packages_server']['base_uri'] %}
 {% set backend_app_version = pillar['console_backend_data_logger']['release_version'] %}
 {% set backend_app_package = 'console-backend-data-logger-' + backend_app_version + '.tar.gz' %}
-{% set install_dir = '/opt/pnda' %}
+{% set install_dir = pillar['pnda']['homedir'] %}
 {% set app_dir = install_dir + '/console-backend-data-logger' %}
 {% set app_config_dir = app_dir + '/conf' %}
 
-{% set host_ip = salt['pnda.ip_addresses']('console_backend')[0] %}
+{% set host_ip = salt['pnda.ip_addresses']('console_backend_data_logger')[0] %}
 
 {% set backend_app_port = salt['pillar.get']('console_backend_data_logger:bind_port', '3001') %}
 
@@ -68,6 +68,7 @@ console-backend-copy_data_logger_upstart:
     - source: salt://console-backend/templates/backend_nodejs_app.conf.tpl
     - template: jinja
     - defaults:
+        no_console_log: True
         host_ip: {{ host_ip }}
         backend_app_port: {{ backend_app_port }}
         app_dir: {{ app_dir }}

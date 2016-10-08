@@ -1,12 +1,12 @@
 {% set packages_server = pillar['packages_server']['base_uri'] %}
 {% set backend_app_version = pillar['console_backend_data_manager']['release_version'] %}
 {% set backend_app_package = 'console-backend-data-manager-' + backend_app_version + '.tar.gz' %}
-{% set install_dir = '/opt/pnda' %}
+{% set install_dir = pillar['pnda']['homedir'] %}
 {% set app_dir = install_dir + '/console-backend-data-manager' %}
 {% set app_config_dir = app_dir + '/conf' %}
 {% set pnda_cluster = salt['pnda.cluster_name']() %}
 
-{% set host_ip = salt['pnda.ip_addresses']('console_backend')[0] %}
+{% set host_ip = salt['pnda.ip_addresses']('console_backend_data_manager')[0] %}
 
 # get host id of the instance where the console backend is running on the cluster
 {% set host_id = '' %}

@@ -2,7 +2,7 @@
 {% set deployment_manager_version = salt['pillar.get']('deployment_manager:release_version', '1.0.0') %}
 {% set deployment_manager_directory_name = 'deployment-manager-' + deployment_manager_version %}
 {% set deployment_manager_package = 'deployment-manager-' + deployment_manager_version + '.tar.gz' %}
-{% set install_dir = '/opt/pnda' %}
+{% set install_dir = pillar['pnda']['homedir'] %}
 
 include:
   - cdh.cloudera-api
@@ -50,6 +50,7 @@ deployment-manager-push_key:
   module.run:
     - name: cp.push
     - path: '{{ install_dir }}/{{ deployment_manager_directory_name }}/dm.pem.pub'
+    - upload_path: '/keys/dm.pem.pub'
 
 deployment-manager-copy_upstart:
   file.managed:

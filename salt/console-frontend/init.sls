@@ -2,7 +2,7 @@
 {% set console_frontend_version = pillar['console_frontend']['release_version'] %}
 {% set console_frontend_package = 'console-frontend-' + console_frontend_version + '.tar.gz' %}
 {% set nginx_config_location = '/etc/nginx/sites-enabled' %}
-{% set install_dir = '/opt/pnda' %}
+{% set install_dir = pillar['pnda']['homedir'] %}
 {% set console_dir = install_dir + '/console-frontend' %}
 {% set console_config_dir = console_dir + '/conf' %}
 {% set console_demo_dir = console_dir + '/js/demo' %}
@@ -12,19 +12,19 @@
 {% set data_manager_version = salt['pillar.get']('console_backend_data_manager:release_version', 'unknown') %}
 {% set data_manager_port = salt['pillar.get']('console_backend_data_manager:bind_port', '3123') %}
 
-{% set data_manager_host = salt['pnda.ip_addresses']('console_backend')[0] %}
+{% set data_manager_host = salt['pnda.ip_addresses']('console_backend_data_manager')[0] %}
 
 # edge node IP
 {% set edge_node_ip = salt['pnda.ip_addresses']('cloudera_edge')[0] %}
 
 # Data logger
-{% set data_logger_ip = salt['pnda.ip_addresses']('console_backend')[0] %}
+{% set data_logger_ip = salt['pnda.ip_addresses']('console_backend_data_logger')[0] %}
 {% set data_logger_port = salt['pillar.get']('console_backend_data_logger:bind_port', '3001') %}
 
 {% set cloudera_manager_ip = salt['pnda.cloudera_manager_ip']() %}
 
 # get Kafka Manager IP
-{% set km_ip = salt['pnda.ip_addresses']('tools')[0] %}
+{% set km_ip = salt['pnda.ip_addresses']('kafka_manager')[0] %}
 
 # get OpenTSDB IP
 {% set opentsdb = salt['pnda.ip_addresses']('opentsdb')[0] %}
