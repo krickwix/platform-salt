@@ -22,16 +22,16 @@ CMS_CFG = {
     "roles": [
         {"name": "cms-ap",
          "type": "ALERTPUBLISHER",
-         "target": "EDGE"},
+         "target": "CM"},
         {"name": "cms-es",
          "type": "EVENTSERVER",
-         "target": "EDGE"},
+         "target": "CM"},
         {"name": "cms-hm",
          "type": "HOSTMONITOR",
-         "target": "EDGE"},
+         "target": "CM"},
         {"name": "cms-sm",
          "type": "SERVICEMONITOR",
-         "target": "EDGE"}
+         "target": "CM"}
      ],
      "role_cfg": [
          {"type": "ACTIVITYMONITOR",
@@ -76,7 +76,7 @@ ZK_CFG = {"service": "ZOOKEEPER",
                      "target": "MGR01"},
                     {"name": "zk-s",
                      "type": "SERVER",
-                     "target": "EDGE"}],
+                     "target": "CM"}],
           "role_cfg": [{"type": "SERVER",
                         "config": {'dataDir': '/data0/var/lib/zookeeper',
                                    'dataLogDir': '/data0/var/lib/zookeeper',
@@ -127,8 +127,8 @@ MAPRED_CFG = {
                     'yarn_nodemanager_local_dirs': '/var/yarn/nm',
                     'yarn_nodemanager_log_dirs': '/var/log/pnda/hadoop-yarn/container',
                     'node_manager_log_dir': '/var/log/pnda/hadoop-yarn',
-                    'yarn_nodemanager_resource_cpu_vcores': '14',
-                    'yarn_nodemanager_resource_memory_mb': '131072'
+                    'yarn_nodemanager_resource_cpu_vcores': '7',
+                    'yarn_nodemanager_resource_memory_mb': '14336'
                 }
         },
         {
@@ -201,7 +201,7 @@ HDFS_CFG = {
             {
                 "name": "hdfs-jn3",
                 "type": "JOURNALNODE",
-                "target": "EDGE"
+                "target": "CM"
             },
             {
                 "name": "hdfs-dn",
