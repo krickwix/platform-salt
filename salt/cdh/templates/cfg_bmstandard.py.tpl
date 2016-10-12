@@ -22,16 +22,16 @@ CMS_CFG = {
     "roles": [
         {"name": "cms-ap",
          "type": "ALERTPUBLISHER",
-         "target": "EDGE"},
+         "target": "CM"},
         {"name": "cms-es",
          "type": "EVENTSERVER",
-         "target": "EDGE"},
+         "target": "CM"},
         {"name": "cms-hm",
          "type": "HOSTMONITOR",
-         "target": "EDGE"},
+         "target": "CM"},
         {"name": "cms-sm",
          "type": "SERVICEMONITOR",
-         "target": "EDGE"}
+         "target": "CM"}
      ],
      "role_cfg": [
          {"type": "ACTIVITYMONITOR",
@@ -201,7 +201,7 @@ HDFS_CFG = {
             {
                 "name": "hdfs-jn3",
                 "type": "JOURNALNODE",
-                "target": "EDGE"
+                "target": "CM"
             },
             {
                 "name": "hdfs-dn",
