@@ -22,7 +22,6 @@ CMS_CFG = {
     "roles": [
         {"name": "cms-ap",
          "type": "ALERTPUBLISHER",
-<<<<<<< HEAD
          "target": "EDGE"},
         {"name": "cms-es",
          "type": "EVENTSERVER",
@@ -33,18 +32,15 @@ CMS_CFG = {
         {"name": "cms-sm",
          "type": "SERVICEMONITOR",
          "target": "EDGE"}
-=======
-         "target": "CM"},
         {"name": "cms-es",
          "type": "EVENTSERVER",
-         "target": "CM"},
+         "target": "EDGE"},
         {"name": "cms-hm",
          "type": "HOSTMONITOR",
-         "target": "CM"},
+         "target": "EDGE"},
         {"name": "cms-sm",
          "type": "SERVICEMONITOR",
-         "target": "CM"}
->>>>>>> PNDA-2268: Add the bmstandard flavor template
+         "target": "EDGE"}
      ],
      "role_cfg": [
          {"type": "ACTIVITYMONITOR",
@@ -89,11 +85,7 @@ ZK_CFG = {"service": "ZOOKEEPER",
                      "target": "MGR01"},
                     {"name": "zk-s",
                      "type": "SERVER",
-<<<<<<< HEAD
                      "target": "EDGE"}],
-=======
-                     "target": "CM"}],
->>>>>>> PNDA-2268: Add the bmstandard flavor template
           "role_cfg": [{"type": "SERVER",
                         "config": {'dataDir': '/data0/var/lib/zookeeper',
                                    'dataLogDir': '/data0/var/lib/zookeeper',
@@ -218,11 +210,7 @@ HDFS_CFG = {
             {
                 "name": "hdfs-jn3",
                 "type": "JOURNALNODE",
-<<<<<<< HEAD
                 "target": "EDGE"
-=======
-                "target": "CM"
->>>>>>> PNDA-2268: Add the bmstandard flavor template
             },
             {
                 "name": "hdfs-dn",
