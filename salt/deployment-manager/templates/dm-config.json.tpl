@@ -15,12 +15,15 @@
 {%- do kafka_zookeepers.append(ip+':2181') -%}
 {%- endfor -%}
 
+{% set km_port = salt['pillar.get']('kafkamanager:bind_port', 10900) %}
+
+
 {% set opentsdb_link = salt['pnda.generate_http_link']('opentsdb',':4242') %}
-{% set km_link = salt['pnda.generate_http_link']('kafka_manager',':9000/clusters/'+pnda_cluster) %}
+{% set km_link = salt['pnda.generate_http_link']('kafka_manager',':'+km_port|string+'/clusters/'+pnda_cluster) %}
 
 {%- set jupyter_nodes = salt['pnda.ip_addresses']('jupyter') -%}
 {%- set jupyter_host = '' -%}
-{%- if jupyter_nodes is not none and jupyter_nodes|length > 1 -%}   
+{%- if jupyter_nodes is not none and jupyter_nodes|length > 0 -%}   
     {%- set jupyter_host = jupyter_nodes[0] -%}
 {%- else -%}
     {%- set jupyter_host = '' -%}
