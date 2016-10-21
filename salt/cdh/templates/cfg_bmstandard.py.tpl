@@ -136,8 +136,8 @@ MAPRED_CFG = {
                     'yarn_nodemanager_local_dirs': '/var/yarn/nm',
                     'yarn_nodemanager_log_dirs': '/var/log/pnda/hadoop-yarn/container',
                     'node_manager_log_dir': '/var/log/pnda/hadoop-yarn',
-                    'yarn_nodemanager_resource_cpu_vcores': '7',
-                    'yarn_nodemanager_resource_memory_mb': '14336'
+                    'yarn_nodemanager_resource_cpu_vcores': '14',
+                    'yarn_nodemanager_resource_memory_mb': '131072'
                 }
         },
         {
