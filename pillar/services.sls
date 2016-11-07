@@ -60,11 +60,11 @@ console_frontend:
   release_version: develop
 
 console_backend_data_logger:
-  release_version: 0.2.2
+  release_version: develop
   bind_port: 3001
 
 console_backend_data_manager:
-  release_version: 0.2.2
+  release_version: develop
   bind_port: 3123
 
 deployment_manager:
