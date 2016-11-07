@@ -32,15 +32,6 @@ CMS_CFG = {
         {"name": "cms-sm",
          "type": "SERVICEMONITOR",
          "target": "EDGE"}
-        {"name": "cms-es",
-         "type": "EVENTSERVER",
-         "target": "EDGE"},
-        {"name": "cms-hm",
-         "type": "HOSTMONITOR",
-         "target": "EDGE"},
-        {"name": "cms-sm",
-         "type": "SERVICEMONITOR",
-         "target": "EDGE"}
      ],
      "role_cfg": [
          {"type": "ACTIVITYMONITOR",
