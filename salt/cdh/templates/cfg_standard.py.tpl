@@ -86,7 +86,7 @@ ZK_CFG = {"service": "ZOOKEEPER",
 MAPRED_CFG = {
     "service": "YARN",
     "name": "yarn01",
-    "config": {'hdfs_service': 'hdfs01', 'zookeeper_service': 'zk01', 'yarn_log_aggregation_retain_seconds': '265000'},
+    "config": {'hdfs_service': 'hdfs01', 'zookeeper_service': 'zk01', 'yarn_log_aggregation_retain_seconds': '265000', 'yarn_log_aggregation_enable': 'false'},
     "roles": [
         {
             "name": "yarn-jh",
@@ -236,7 +236,7 @@ HDFS_CFG = {
             },
             {
                 "type": "JOURNALNODE",
-                "config": {'dfs_journalnode_edits_dir':'/data0/jn/data'}
+                "config": {'dfs_journalnode_edits_dir':'/data0/jn/data', 'journalnode_log_dir': '/var/log/pnda/hadoop/jn'}
             },
             {
                 "type": "SECONDARYNAMENODE",
@@ -251,6 +251,10 @@ HDFS_CFG = {
             {
                 "type": "GATEWAY",
                 "config": {}
+            },
+            {
+                "type": "HTTPFS",
+                "config": {'httpfs_log_dir': '/var/log/pnda/hadoop-httpfs'}
             }
         ]
 }

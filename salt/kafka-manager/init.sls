@@ -2,6 +2,7 @@
 {% set release_directory = salt['pillar.get']('kafkamanager:release_directory', '/srv') %}
 {% set release_version = salt['pillar.get']('kafkamanager:release_version', '1.3.0.4') %}
 {% set release_filename = 'kafka-manager-' + release_version + '.zip' %}
+{% set km_port = salt['pillar.get']('kafkamanager:bind_port', 10900) %}
 
 {%- set zk_servers = [] -%}
 {%- for ip in salt['pnda.kafka_zookeepers_ips']() -%}
@@ -16,8 +17,8 @@ kafka-manager-install_unzip:
 kafka-manager-dl-and-extract:
   archive.extracted:
     - name: {{ release_directory }}
-    - source: {{ packages_server }}/platform/releases/kafka-manager/{{ release_filename }}
-    - source_hash: {{ packages_server }}/platform/releases/kafka-manager/{{ release_filename }}.sha512.txt
+    - source: {{ packages_server }}/{{ release_filename }}
+    - source_hash: {{ packages_server }}/{{ release_filename }}.sha512.txt
     - archive_format: zip
     - if_missing: {{ release_directory }}/kafka-manager-{{ release_version }}
 
@@ -43,7 +44,10 @@ kafka-manager-install-application_configuration:
 kafka-manager-install-kafka-manager-upstart-script:
   file.managed:
     - name: /etc/init/kafka-manager.conf
-    - source: salt://kafka-manager/files/kafka-manager.conf
+    - source: salt://kafka-manager/templates/kafka-manager.conf.tpl
+    - template: jinja
+    - context:
+      kafka_manager_port: {{ km_port }}
 
 kafka-manager-update-kafka-manager:
   file.managed:

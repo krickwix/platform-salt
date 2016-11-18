@@ -16,7 +16,8 @@
 {% endfor %}
 {% set host_id = namenode|join(" ") %}
 
-{% set dm_ip = salt['pnda.ip_addresses']('deployment_manager')[0] %}
+{% set dm_link = salt['pnda.generate_http_link']('deployment_manager',':5000') %}
+{% set data_service_link = salt['pnda.generate_http_link']('data_service',':7000') %}
 
 {% set ldap_ip = salt['pnda.ldap_ip']() %}
 {% if ldap_ip == None %}
@@ -25,7 +26,6 @@
 
 {% set backend_app_port = salt['pillar.get']('console_backend_data_manager:bind_port', '3123') %}
 
-{% set data_service_ip = salt['pnda.ip_addresses']('data_service')[0] %}
 
 include:
   - nodejs
@@ -33,8 +33,8 @@ include:
 console-backend-data-manager-dl-and-extract:
   archive.extracted:
     - name: {{ install_dir }} 
-    - source: {{ packages_server }}/platform/releases/console/{{ backend_app_package }}
-    - source_hash: {{ packages_server }}/platform/releases/console/{{ backend_app_package }}.sha512.txt
+    - source: {{ packages_server }}/{{ backend_app_package }}
+    - source_hash: {{ packages_server }}/{{ backend_app_package }}.sha512.txt
     - archive_format: tar
     - tar_options: v
     - if_missing: {{ install_dir }}/console-backend-data-manager-{{ backend_app_version }}
@@ -52,8 +52,8 @@ console-backend-data-manager-config:
     - template: jinja
     - defaults:
         nodename: {{ host_id }}
-        dm_endpoint: http://{{dm_ip}}:5000
-        data_service_url: http://{{data_service_ip}}:7000
+        dm_endpoint: {{dm_link}}
+        data_service_url: {{data_service_link}}
 
 # Create LDAP config file from template
 console-backend-ldap-config:
