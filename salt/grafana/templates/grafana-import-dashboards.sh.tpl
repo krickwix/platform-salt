@@ -26,4 +26,4 @@ echo "${JSON_PREFIX}" > "${TEMP_FILE}"
 cat "$1" >> "${TEMP_FILE}"
 echo "${JSON_SUFFIX}" >> "${TEMP_FILE}"
 
-curl -H "Content-Type: application/json" -X POST -d @"${TEMP_FILE}" http://{{ pnda_user }}:{{ pnda_password }}@localhost:3000/api/dashboards/import
+curl -H "Content-Type: application/json" -X POST -d @"${TEMP_FILE}" http://{{pnda_user }}:{{ pnda_password }}@localhost:3000/api/dashboards/import
