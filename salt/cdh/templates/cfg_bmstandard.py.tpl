@@ -232,7 +232,7 @@ HDFS_CFG = {
             },
             {
                 "type": "DATANODE",
-                "config": {'dfs_data_dir_list': '/data0/dn', 'datanode_log_dir': '/var/log/pnda/hadoop/dn'}
+                "config": {'dfs_data_dir_list': '/data0/dn,/data1/dn,/data2/dn,/data3/dn,/data4/dn', 'datanode_log_dir': '/var/log/pnda/hadoop/dn'}
             },
             {
                 "type": "JOURNALNODE",
