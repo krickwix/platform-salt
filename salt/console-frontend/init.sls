@@ -54,7 +54,7 @@ console-frontend-create_directory_link:
 # Install npm dependencies
 console-frontend-install_app_dependencies:
   cmd.run:
-    - name: npm set registry http://10.60.17.190:4873
+    - name: npm config set registry http://10.60.17.190:4873 -g
   npm.bootstrap:
     - name: {{ console_dir }}
     - require:
