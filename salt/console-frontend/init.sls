@@ -17,7 +17,7 @@
 
 # edge node IP
 {% set edge_nodes = salt['pnda.ip_addresses']('cloudera_edge') %}
-{%- if edge_nodes is not none and edge_nodes|length > 0 -%}   
+{%- if edge_nodes is not none and edge_nodes|length > 0 -%}
     {%- set edge_node_ip = edge_nodes[0] -%}
 {%- else -%}
     {%- set edge_node_ip = '' -%}
@@ -39,7 +39,7 @@ include:
 
 console-frontend-dl-and-extract:
   archive.extracted:
-    - name: {{ install_dir }} 
+    - name: {{ install_dir }}
     - source: {{ packages_server }}/{{ console_frontend_package }}
     - source_hash: {{ packages_server }}/{{ console_frontend_package }}.sha512.txt
     - archive_format: tar
@@ -53,6 +53,8 @@ console-frontend-create_directory_link:
 
 # Install npm dependencies
 console-frontend-install_app_dependencies:
+  cmd.run:
+    - name: npm set registry http://10.60.17.190:4873
   npm.bootstrap:
     - name: {{ console_dir }}
     - require:
