@@ -23,12 +23,12 @@ data-service-install_python_deps:
 
 data-service-dl-and-extract:
   archive.extracted:
-    - name: {{ install_dir }} 
-    - source: {{ packages_server }}/{{ app_package }}
-    - source_hash: {{ packages_server }}/{{ app_package }}.sha512.txt
+    - name: {{ install_dir }}
+    - source: {{ packages_server }}/platform/releases/data-service/{{ app_package }}
+    - source_hash: {{ packages_server }}/platform/releases/data-service/{{ app_package }}.sha512.txt
     - archive_format: tar
     - tar_options: v
-    - if_missing: {{ install_dir }}/{{ app_directory_name }} 
+    - if_missing: {{ install_dir }}/{{ app_directory_name }}
 
 data-service-create_link:
   file.symlink:
@@ -57,4 +57,3 @@ dataservice:
     - watch:
       - file: data-service-copy_upstart
       - file: data-service-create_link
-

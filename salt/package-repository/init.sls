@@ -11,11 +11,11 @@ include:
 package-repository-dl-and-extract:
   archive.extracted:
     - name: {{ install_dir }}
-    - source: {{ packages_server }}/{{ package_repository_package }}
-    - source_hash: {{ packages_server }}/{{ package_repository_package }}.sha512.txt
+    - source: {{ packages_server }}/platform/releases/package-repository/{{ package_repository_package }}
+    - source_hash: {{ packages_server }}/platform/releases/package-repository/{{ package_repository_package }}.sha512.txt
     - archive_format: tar
     - tar_options: v
-    - if_missing: {{ install_dir }}/{{ package_repository_directory_name }} 
+    - if_missing: {{ install_dir }}/{{ package_repository_directory_name }}
 
 package-repository-install_python_deps:
   pip.installed:
@@ -52,7 +52,7 @@ package-repository-stop_package_repository:
 {% if package_repository_fs_type == 'sshfs' %}
 {% include "package-repository/sshfs.sls" %}
 
-{% elif package_repository_fs_type == 'local' %}    
+{% elif package_repository_fs_type == 'local' %}
 {% set package_repository_fs_location_path = salt['pillar.get']('package_repository:fs_location_path', '/mnt/packages') %}
 package-repository-create_fs_location_path:
   file.directory:
