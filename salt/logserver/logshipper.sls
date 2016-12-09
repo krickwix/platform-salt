@@ -105,7 +105,7 @@ logshipper-copy_systemd:
     - defaults:
         install_dir: {{ install_dir }}
 
-logshipper-systemd_reload:
+service.systemctl_reload:
   module.run:
     - onchanges:
       - file: logshipper-copy_systemd
