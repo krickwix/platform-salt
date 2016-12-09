@@ -88,6 +88,7 @@ logshipper-create_sincedb_folder:
     - mode: 777
     - makedirs: True
 
+{% if grains['os'] == 'Ubuntu' %}
 logshipper-copy_upstart:
   file.managed:
     - name: /etc/init/logshipper.conf
@@ -95,15 +96,37 @@ logshipper-copy_upstart:
     - template: jinja
     - defaults:
         install_dir: {{ install_dir }}
+{% elif grains['os'] == 'RedHat' %}
+logshipper-copy_systemd:
+  file.managed:
+    - name: /usr/lib/systemd/system/logshipper.service
+    - source: salt://logserver/logshipper_templates/logstash.service.tpl
+    - template: jinja
+    - defaults:
+        install_dir: {{ install_dir }}
+
+logshipper-systemd_reload:
+  module.run:
+    - onchanges:
+      - file: logshipper-copy_systemd
+{% endif %}
 
 logshipper-stop_service:
   cmd.run:
+{% if grains['os'] == 'Ubuntu' %}
     - name: 'initctl stop logshipper || echo logshipper already stopped'
+{% elif grains['os'] == 'RedHat' %}
+    - name: /bin/systemctl stop logshipper
+{% endif %}
     - user: root
     - group: root
 
 logshipper-start_service:
   cmd.run:
+{% if grains['os'] == 'Ubuntu' %}
     - name: 'initctl start logshipper'
+{% elif grains['os'] == 'RedHat' %}
+    - name: /bin/systemctl start logshipper
+{% endif %}
     - user: root
     - group: root
