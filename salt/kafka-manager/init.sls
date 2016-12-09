@@ -57,7 +57,11 @@ kafka-manager-install_systemd:
     - template: jinja
     - context:
       kafka_manager_port: {{ km_port }}
+kafka-manager-systemctl_reload:
+  cmd.run:
+    - name: /bin/systemctl daemon-reload
 {% endif %}
+
 kafka-manager-update-kafka-manager:
   file.managed:
     - name: {{ release_directory }}/kafka-manager-{{ release_version }}/bin/kafka-manager
@@ -72,4 +76,8 @@ kafka-manager-service:
       - file: kafka-manager-create_link
       - file: kafka-manager-set-configuration-file
       - file: kafka-manager-install-application_configuration
+{% if grains['os'] == 'Ubuntu' %}
       - file: kafka-manager-install-kafka-manager-upstart-script
+{% elif grains['os'] == 'RedHat' %}
+      - file: kafka-manager-install_systemd
+{% endif %}
