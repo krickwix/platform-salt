@@ -100,17 +100,29 @@ zookeeper-upstart:
     - require:
       - file: zookeeper-data-dir
 {% elif grains['os'] == 'RedHat' %}
-zookeeper-systemd:
-  file.manages:
-    - name: {{ install_dir }}/zookeeper-{{ zookeeper_version }}/bin/zookeeper-service-start.sh
-    - source: salt://zookeeper/files/templates/zookeeper-service-start.sh.tpl
-    - template: jinja
-    - context:
-      conf_dir: {{ install_dir }}/zookeeper-{{ zookeeper_version }}/conf
-    - mode: 644
-    - require:
-      - file: zookeeper-data-dir
+zookeeper-service_startpre:
+    file.managed:
+      - name: {{ install_dir }}/zookeeper-{{ zookeeper_version }}/bin/zookeeper-service-startpre.sh
+      - source: salt://zookeeper/files/templates/zookeeper-service-startpre.sh.tpl
+      - template: jinja
+      - context:
+        conf_dir: {{ install_dir }}/zookeeper-{{ zookeeper_version }}/conf
+      - mode: 644
+      - require:
+        - file: zookeeper-data-dir
 
+zookeper-service_start:
+    file.managed:
+      - name: {{ install_dir }}/zookeeper-{{ zookeeper_version }}/bin/zookeeper-service-start.sh
+      - source: salt://zookeeper/files/templates/zookeeper-service-start.sh.tpl
+      - template: jinja
+      - context:
+        conf_dir: {{ install_dir }}/zookeeper-{{ zookeeper_version }}/conf
+      - mode: 644
+      - require:
+        - file: zookeeper-data-dir
+
+zookeeper-systemd:
   file.managed:
     - name: /usr/lib/systemd/system/zookeeper.service
     - source: salt://zookeeper/files/templates/zookeeper.service.tpl
