@@ -34,6 +34,7 @@ kafka-server-conf:
     - context:
       zk_hosts: {{ kafka_zookeepers|join(',') }}
 
+{% if grains['os'] == 'Ubuntu' %}
 kafka-copy_kafka_upstart:
   file.managed:
     - source: salt://kafka/templates/kafka.init.conf.tpl
@@ -44,6 +45,21 @@ kafka-copy_kafka_upstart:
       workdir: {{ kafka.prefix }}
       mem_xmx: {{ mem_xmx }}
       mem_xms: {{ mem_xmx }}
+{% elif grains['os'] == 'RedHat' %}
+kafka-copy_kafka_systemd:
+  file.managed:
+    - source: salt://kafka/templates/kafka.service.tpl
+    - name: /usr/lib/systemd/system/kafka.conf
+    - mode: 644
+    - template: jinja
+    - context:
+      workdir: {{ kafka.prefix }}
+      mem_xmx: {{ mem_xmx }}
+      mem_xms: {{ mem_xmx }}
+kafka-systemctl_reload:
+  cmd.run:
+    - name: /bin/systemctl daemon-reload
+{% endif %}
 
 kafka-logs-configuration-dirs:
   file.directory:
