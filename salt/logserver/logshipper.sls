@@ -6,6 +6,13 @@
 include:
   - java
 
+{% if grains['os'] == 'RedHat' %}
+syslog:
+  pkg.installed:
+    -pkgs:
+      - syslog-ng
+{% endif %}
+
 logshipper-lbc6:
   pkg.installed:
     - pkgs:
