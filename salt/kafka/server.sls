@@ -85,4 +85,8 @@ kafka-service:
     - enable: true
     - watch:
       - file: kafka-server-conf
+{% if grains['os'] == 'Ubuntu' %}
       - file: kafka-copy_kafka_upstart
+{% elif grains['os'] == 'RedHat' %}
+      - file: kafka-copy_kafka_systemd
+{% endif %}
