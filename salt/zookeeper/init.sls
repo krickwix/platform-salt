@@ -107,7 +107,7 @@ zookeeper-service_startpre:
       - template: jinja
       - context:
         conf_dir: {{ install_dir }}/zookeeper-{{ zookeeper_version }}/conf
-      - mode: 644
+      - mode: 755
       - require:
         - file: zookeeper-data-dir
 
@@ -118,7 +118,7 @@ zookeper-service_start:
       - template: jinja
       - context:
         conf_dir: {{ install_dir }}/zookeeper-{{ zookeeper_version }}/conf
-      - mode: 644
+      - mode: 755
       - require:
         - file: zookeeper-data-dir
 
