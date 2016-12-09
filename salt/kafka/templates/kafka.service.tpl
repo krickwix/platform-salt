@@ -11,5 +11,5 @@ Group=kafka
 WorkingDirectory={{ workdir }}
 EnvironmentFile=/etc/default/kafka-env
 ExecStartPre=/bin/sleep 5
-ExecStart={{ workdir }}/bin/kafka-server-start.sh {{ workdir }}/config/server.properties
+ExecStart={{ workdir }}/kafka-start.sh
 ExecStopPost=/bin/sleep 5

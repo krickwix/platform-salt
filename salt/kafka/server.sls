@@ -46,6 +46,14 @@ kafka-copy_kafka_upstart:
       mem_xmx: {{ mem_xmx }}
       mem_xms: {{ mem_xmx }}
 {% elif grains['os'] == 'RedHat' %}
+kafka-copy_script:
+  file.managed:
+    - source: salt://kafka/templates/kafka-start.sh.tpl
+    - name: {{ kafka.prefix }}/kafka-start-script.sh
+    - mode: 755
+    - template: jinja
+    - context:
+      workdir: {{ kafka.prefix }}
 kafka-copy_env:
   file.managed:
     - source: salt://kafka/templates/kafka-env.tpl
