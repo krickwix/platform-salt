@@ -7,9 +7,9 @@ include:
   - java
 
 {% if grains['os'] == 'RedHat' %}
-syslog:
+logshipper-syslog:
   pkg.installed:
-    -pkgs:
+    - pkgs:
       - syslog-ng
 {% endif %}
 
