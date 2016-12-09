@@ -107,8 +107,6 @@ logshipper-copy_systemd:
 
 service.systemctl_reload:
   module.run:
-    - onchanges:
-      - file: logshipper-copy_systemd
 {% endif %}
 
 logshipper-stop_service:
