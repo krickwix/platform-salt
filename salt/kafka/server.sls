@@ -49,7 +49,7 @@ kafka-copy_kafka_upstart:
 kafka-copy_kafka_systemd:
   file.managed:
     - source: salt://kafka/templates/kafka.service.tpl
-    - name: /usr/lib/systemd/system/kafka.conf
+    - name: /usr/lib/systemd/system/kafka.service
     - mode: 644
     - template: jinja
     - context:
