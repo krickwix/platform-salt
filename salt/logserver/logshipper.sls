@@ -105,8 +105,9 @@ logshipper-copy_systemd:
     - defaults:
         install_dir: {{ install_dir }}
 
-service.systemctl_reload:
-  module.run:
+logshipper-systemctl_reload:
+  cmd.run:
+    - name: /bin/systemctl daemon-reload
 {% endif %}
 
 logshipper-stop_service:
