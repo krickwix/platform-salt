@@ -110,6 +110,9 @@ zookeeper-systemd:
     - mode: 644
     - require:
       - file: zookeeper-data-dir
+zookeeper-systemctl_reload:
+  cmd.run:
+    - name: /bin/systemctl daemon-reload
 {% endif %}
 
 zookeeper-ensure-service-running:
