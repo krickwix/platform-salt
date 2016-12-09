@@ -46,6 +46,15 @@ kafka-copy_kafka_upstart:
       mem_xmx: {{ mem_xmx }}
       mem_xms: {{ mem_xmx }}
 {% elif grains['os'] == 'RedHat' %}
+kafka-copy_env:
+  - source: salt://kafka/templates/kafka-env.tpl
+  - name: /etc/default/kafka-env
+  - mode: 644
+  - template: jinja
+  - context:
+    mem_xmx: {{ mem_xmx }}
+    mem_xms: {{ mem_xmx }}
+
 kafka-copy_kafka_systemd:
   file.managed:
     - source: salt://kafka/templates/kafka.service.tpl
@@ -54,8 +63,7 @@ kafka-copy_kafka_systemd:
     - template: jinja
     - context:
       workdir: {{ kafka.prefix }}
-      mem_xmx: {{ mem_xmx }}
-      mem_xms: {{ mem_xmx }}
+      
 kafka-systemctl_reload:
   cmd.run:
     - name: /bin/systemctl daemon-reload
