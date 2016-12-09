@@ -9,12 +9,16 @@ include:
 logshipper-lbc6:
   pkg.installed:
     - pkgs:
+      {% if grains['os'] == 'RedHat' %}
+      - glibc-devel
+      {% elif grains['os'] == 'Ubuntu' %}
       - libc6-dev
+      {% endif %}
       - acl
 
 logshipper-dl-and-extract:
   archive.extracted:
-    - name: {{ install_dir }} 
+    - name: {{ install_dir }}
     - source: https://download.elastic.co/logstash/logstash/logstash-1.5.4.tar.gz
     - source_hash: https://download.elastic.co/logstash/logstash/logstash-1.5.4.tar.gz.sha1.txt
     - archive_format: tar
