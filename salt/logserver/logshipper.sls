@@ -80,7 +80,11 @@ logshipper-create_sincedb_folder:
   file.directory:
     - name: {{ install_dir }}/logstash/sincedb
     - user: root
-    - group: syslog
+    {% if grains['os'] == 'RedHat' %}
+    - group: root
+    {% elif grains['os'] == 'Ubuntu' %}
+  - group: syslog
+    {% endif %}
     - mode: 777
     - makedirs: True
 
