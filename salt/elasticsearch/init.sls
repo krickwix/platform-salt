@@ -97,6 +97,9 @@ elasticsearch-dl_and_extract_elasticsearch:
       confdir: {{elasticsearch_confdir }}
       workdir: {{elasticsearch_workdir }}
       defaultconfig: {{elasticsearch_confdir}}/elasticsearch.yml
+elasticsearch-systemctl_reload:
+  cmd.run:
+    - name: /bin/systemctl daemon-reload
 {% endif %}
 
 elasticsearch-service:
