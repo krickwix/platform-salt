@@ -107,4 +107,8 @@ elasticsearch-service:
     - name: elasticsearch
     - enable: true
     - watch:
+{% if grains['os'] == 'Ubuntu' %}
       - file: /etc/init/elasticsearch.conf
+{% elif grains['os'] == 'RedHat' %}
+      - file: /usr/lib/systemd/system/elasticsearch.service
+{% endif %}
