@@ -8,7 +8,11 @@ include:
 
 install-redis_server:
   pkg.installed:
+{% if grains['os'] == 'Ubuntu' %}
     - name: redis-server
+{% elif grains['os'] == 'RedHat' %}
+    - name: redis
+{% endif %}
 
 change-bind-address_redis:
   file.replace:
