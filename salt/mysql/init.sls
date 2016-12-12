@@ -3,11 +3,11 @@
 include:
   - .connector
 
+{% if grains['os'] == 'Ubuntu' %}
 mysql-install-debconf-utils:
   pkg.installed:
     - name: debconf-utils
 
-{% if grains['os'] == 'Ubuntu' %}
 mysql-setup-mysql:
   debconf.set:
     - name: mysql-server
