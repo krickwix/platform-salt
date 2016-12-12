@@ -54,7 +54,11 @@ mysql-update-mysql-configuration:
 
 mysql-mysql-running:
   service.running:
+{% if grains['os'] == 'Ubuntu' %}
     - name: mysql
+{% elif grains['os'] == 'RedHat' %}
+    - name: mariadb
+{% endif %}
     - watch:
       - pkg: mysql-install-mysql-server
       - file: /etc/mysql/my.cnf
