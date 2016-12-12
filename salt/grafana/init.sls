@@ -6,7 +6,7 @@
 {% set grafana_deb_package = 'grafana_' + grafana_version + '_amd64.deb' %}
 {% set grafana_rpm_package = 'grafana_' + grafana_version + '.x86_64.rpm' %}
 {% set grafana_deb_location = 'https://grafanarel.s3.amazonaws.com/builds/' + grafana_deb_package %}
-{% set grafana_rpm_location = 'https://grafanarel.s3.amazonaws.com/builds/grafana_3.1.1-1470047149.x86_64.rpm' %}
+{% set grafana_rpm_location = 'https://grafanarel.s3.amazonaws.com/builds/grafana-3.1.1-1470047149.x86_64.rpm' %}
 {% set pnda_graphite_port = 8013 %}
 {% set pnda_graphite_host = salt['pnda.ip_addresses']('graphite')[0] %}
 
