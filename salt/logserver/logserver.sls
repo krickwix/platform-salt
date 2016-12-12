@@ -74,7 +74,11 @@ logserver-create_log_folder:
   file.directory:
     - name: /var/log/pnda
     - user: root
+{% if grains['os'] == 'Ubuntu' %}
     - group: syslog
+{% elif grains['os'] == 'RedHat' %}
+    - group: root
+{% endif %}
     - mode: 777
     - makedirs: True
 
