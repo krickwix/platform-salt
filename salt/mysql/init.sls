@@ -34,8 +34,8 @@ mysql-install-mysql-server:
     - name: mariadb-server
 mysql_root_password:
   cmd.run:
-    - name: mysqladmin --user {{ mysql_root_user }} password '{{ mysql_root_password|replace("'", "'\"'\"'") }}'
-    - unless: mysql --user {{ mysql_root_user }} --password='{{ mysql_root_password|replace("'", "'\"'\"'") }}' --execute="SELECT 1;"
+    - name: mysqladmin --user root password '{{ mysql_root_password|replace("'", "'\"'\"'") }}'
+    - unless: mysql --user root --password='{{ mysql_root_password|replace("'", "'\"'\"'") }}' --execute="SELECT 1;"
     - require:
       - service: mysql-mysql-running
 {% endif %}
