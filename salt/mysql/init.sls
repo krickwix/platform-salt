@@ -2,11 +2,12 @@
 
 include:
   - .connector
-  
+
 mysql-install-debconf-utils:
   pkg.installed:
     - name: debconf-utils
 
+{% if grains['os'] == 'Ubuntu' %}
 mysql-setup-mysql:
   debconf.set:
     - name: mysql-server
@@ -16,6 +17,7 @@ mysql-setup-mysql:
         'mysql-server/start_on_boot': {'type': 'boolean', 'value': 'true'}
     - require:
       - pkg: mysql-install-debconf-utils
+{% endif %}
 
 mysql-install-python-library:
   pkg.installed:
@@ -24,9 +26,19 @@ mysql-install-python-library:
 
 mysql-install-mysql-server:
   pkg.installed:
+{% if grains['os'] == 'Ubuntu' %}
     - name: mysql-server-5.6
     - require:
       - debconf: mysql-setup-mysql
+{% elif grains['os'] == 'RedHat' %}
+    - name: mariadb-server
+mysql_root_password:
+  cmd.run:
+    - name: mysqladmin --user {{ mysql_root_user }} password '{{ mysql_root_password|replace("'", "'\"'\"'") }}'
+    - unless: mysql --user {{ mysql_root_user }} --password='{{ mysql_root_password|replace("'", "'\"'\"'") }}' --execute="SELECT 1;"
+    - require:
+      - service: mysql-mysql-running
+{% endif %}
 
 mysql-update-mysql-configuration:
   file.replace:
