@@ -119,8 +119,15 @@ logserver-service:
       - file: logserver-copy_systemd
 {% endif %}
 
+{% if grains['os'] == 'Ubuntu' %}
 redis-service_restart:
   cmd.run:
     - name: 'service redis-server restart'
     - user: root
     - group: root
+{% elif grains['os'] == 'RedHat' %}
+redis-service:
+    service.running:
+      - name: redis
+      - enable: True
+{% endif %}
