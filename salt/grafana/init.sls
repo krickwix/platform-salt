@@ -10,8 +10,6 @@
 {% set pnda_graphite_port = 8013 %}
 {% set pnda_graphite_host = salt['pnda.ip_addresses']('graphite')[0] %}
 
-https://grafanarel.s3.amazonaws.com/builds/grafana-3.1.0-1468321182.x86_64.rpm
-
 {% set datasources = [
     '{ "name": "PNDA OpenTSDB", "type": "opentsdb", "url": "http://localhost:4242", "access": "proxy", "basicAuth": false, "isDefault": true }',
     '{{ "name": "PNDA Graphite", "type": "graphite", "url": "http://{}:{}", "access": "proxy", "basicAuth": false, "isDefault": false }}'.format(pnda_graphite_host, pnda_graphite_port) ] %}
