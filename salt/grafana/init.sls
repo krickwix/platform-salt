@@ -43,6 +43,8 @@ grafana-login_script_run:
         pnda_user: {{ pillar['pnda']['user'] }}
         pnda_password: {{ pillar['pnda']['password'] }}
     - cwd: /
+    - require:
+      - service: grafana-server_start
 
 {% for ds in datasources %}
 grafana-create_datasources_{{ loop.index }}:
