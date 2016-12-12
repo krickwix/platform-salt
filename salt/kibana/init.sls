@@ -50,6 +50,7 @@ kibana-copy_kibana_upstart:
 kibana-copy_systemd:
   file.managed:
     - source: salt://elasticsearch/files/templates/kibana.service.tpl
+    - name: /usr/lib/systemd/system/kibana.service
     - mode: 644
     - template: jinja
     - context:
