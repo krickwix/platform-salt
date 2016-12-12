@@ -21,7 +21,11 @@ mysql-setup-mysql:
 
 mysql-install-python-library:
   pkg.installed:
+{% if grains['os'] == 'Ubuntu' %}
     - name: python-mysqldb
+{% elif grains['os'] == 'RedHat' %}
+    - name: MySQL-python
+{% endif %}
     - reload_modules: True
 
 mysql-install-mysql-server:
