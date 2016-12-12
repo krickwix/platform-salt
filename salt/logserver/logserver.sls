@@ -110,7 +110,7 @@ logserver-systemctl_reload:
   cmd.run:
     - name: /bin/systemctl daemon-reload
 logserver-stop_app:
-  service.stopped:
+  service.dead:
     - name: logstash
 logserver-service:
   service.running:
