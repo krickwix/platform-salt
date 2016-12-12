@@ -105,6 +105,8 @@ logserver-copy_systemd:
   file.managed:
     - name: /usr/lib/systemd/system/logstash.service
     - source: salt://logserver/logserver_templates/logstash.service.tpl
+    - defaults:
+        install_dir: {{ install_dir }}
     - context:
         install_dir: {{ install_dir }}
 logserver-systemctl_reload:
