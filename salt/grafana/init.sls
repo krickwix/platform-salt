@@ -4,7 +4,7 @@
 {% set grafana_rpm_hash = settings.get('release_hash', 'sha256=5989ad695554c5bc924c2284bc035feb379e1e8c') %}
 
 {% set grafana_deb_package = 'grafana_' + grafana_version + '_amd64.deb' %}
-{% set grafana_deb_package = 'grafana_' + grafana_version + '.x86_64.rpm' %}
+{% set grafana_rpm_package = 'grafana_' + grafana_version + '.x86_64.rpm' %}
 {% set grafana_deb_location = 'https://grafanarel.s3.amazonaws.com/builds/' + grafana_deb_package %}
 {% set grafana_rpm_location = 'https://grafanarel.s3.amazonaws.com/builds/' + grafana_rpm_package %}
 {% set pnda_graphite_port = 8013 %}
