@@ -1,3 +1,3 @@
 snappy-install-snappy:
-  pip.installed:
+  pkg.installed:
     - name: snappy
