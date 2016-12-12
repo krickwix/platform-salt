@@ -49,7 +49,7 @@ kibana-copy_kibana_upstart:
 {% elif grains['os'] == 'RedHat' %}
 kibana-copy_systemd:
   file.managed:
-    - source: salt://elasticsearch/files/templates/kibana.service.tpl
+    - source: salt://kibana/files/templates/kibana.service.tpl
     - name: /usr/lib/systemd/system/kibana.service
     - mode: 644
     - template: jinja
