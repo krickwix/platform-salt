@@ -3,5 +3,5 @@ Description=logserver service
 
 [Service]
 Type=simple
-ExecStart={{ install_dir }}/logstash/bin/logstash -f {{ install_dir }}/logstash/collector.conf
+ExecStart={{ home_dir }}/logstash/bin/logstash -f {{ home_dir }}/logstash/collector.conf
 ExectStopPost=/bin/sleep 2
