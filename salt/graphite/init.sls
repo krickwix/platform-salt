@@ -25,7 +25,7 @@ Development Tools:
   pkg.group_installed
 libffi-devel:
   pkg.installed
-mod_wsgi:
+uwsgi:
   pkg.installed
 python-carbon:
   pkg.installed
