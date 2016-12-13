@@ -74,7 +74,7 @@ enable_nginx:
     file.managed:
       - name: /etc/nginx/conf.d/graphite.conf
       - source: salt://graphite/files/graphite.conf
-configure_uwsgi:
+enable_uwsgi:
   file.managed:
     - name: /etc/uwsgi.d/graphite-api.ini
     - source: salt://graphite/files/graphite-api.ini
@@ -120,5 +120,7 @@ ensure_uwsgi_running:
     - name: uwsgi
     - enable: True
     - watch:
+{% if grains['os'] == 'Ubuntu' %}
       - file: configure_uwsgi
+{% endif %}
       - file: enable_uwsgi
