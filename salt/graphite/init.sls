@@ -70,7 +70,7 @@ enable_uwsgi:
     - name: /etc/uwsgi/apps-enabled/graphite-api.ini
     - target: /etc/uwsgi/apps-available/graphite-api.ini
 {% elif grains['os'] == 'RedHat' %}
-configure_nginx:
+enable_nginx:
     file.managed:
       - name: /etc/nginx/conf.d/graphite.conf
       - source: salt://graphite/files/graphite.conf
