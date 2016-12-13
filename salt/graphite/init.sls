@@ -29,6 +29,8 @@ uwsgi:
   pkg.installed
 python-carbon:
   pkg.installed
+_graphite:
+  user.present
 {% endif %}
 
 install-graphite-api:
