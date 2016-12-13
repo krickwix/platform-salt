@@ -49,6 +49,7 @@ configure_carbon:
     - name: /etc/carbon/carbon.conf
     - source: salt://graphite/files/carbon.conf
 
+{% if grains['os'] == 'Ubuntu' %}
 configure_nginx:
   file.managed:
     - name: /etc/nginx/sites-available/graphite.conf
@@ -68,6 +69,16 @@ enable_uwsgi:
   file.symlink:
     - name: /etc/uwsgi/apps-enabled/graphite-api.ini
     - target: /etc/uwsgi/apps-available/graphite-api.ini
+{% elif grains['os'] == 'RedHat' %}
+configure_nginx:
+    file.managed:
+      - name: /etc/nginx/conf.d/graphite.conf
+      - source: salt://graphite/files/graphite.conf
+configure_uwsgi:
+  file.managed:
+    - name: /etc/uwsgi/apps-available/graphite-api.ini
+    - source: salt://graphite/files/graphite-api.ini
+{% endif %}
 
 configure_graphite_yaml:
   file.managed:
