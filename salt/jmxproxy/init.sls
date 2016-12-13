@@ -49,7 +49,7 @@ jmxproxy-upstart_script:
 {% elif grains['os'] == 'RedHat' %}
 jmxproxy-systemd:
   file.managed:
-    - name: /etc/init/jmxproxy.service
+    - name: /usr/lib/systemd/system/jmxproxy.service
     - source: salt://{{ sls }}/templates/jmxproxy.service.tpl
     - mode: 755
     - template: jinja
