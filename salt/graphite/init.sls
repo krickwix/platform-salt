@@ -18,12 +18,16 @@ libffi-dev:
   pkg.installed
 libapache2-mod-wsgi:
   pkg.installed
+graphite-carbon:
+  pkg.installed
 {% elif grains['os'] == 'RedHat' %}
 Development Tools:
   pkg.group_installed
 libffi-devel:
   pkg.installed
 mod_wsgi:
+  pkg.installed
+python-carbon:
   pkg.installed
 {% endif %}
 
@@ -34,8 +38,6 @@ install-graphite-api:
       - cairocffi == 0.6
       - graphite-api == 1.1.3
 
-graphite-carbon:
-  pkg.installed
 
 configure_carbon_default:
   file.managed:
