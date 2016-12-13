@@ -110,7 +110,9 @@ ensure_nginx_running:
     - name: nginx
     - enable: True
     - watch:
+{% if grains['os'] == 'Ubuntu' %}
       - file: configure_nginx
+{% endif %}
       - file: enable_nginx
 
 ensure_uwsgi_running:
