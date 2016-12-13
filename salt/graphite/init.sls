@@ -3,6 +3,7 @@
 include:
   - python-pip
 
+{% if grains['os'] == 'Ubuntu' %}
 graphite-reqs:
   pkg.installed:
     - refresh: True
@@ -13,6 +14,10 @@ graphite-reqs:
       - uwsgi
       - uwsgi-plugin-python
       - libcairo2-dev
+{% elif grains['os'] == 'RedHat' %}
+Development Tools:
+  pkg.group_installed
+{% endif %}
 
 libffi-dev:
   pkg.installed
