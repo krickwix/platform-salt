@@ -14,16 +14,19 @@ graphite-reqs:
       - uwsgi
       - uwsgi-plugin-python
       - libcairo2-dev
+libffi-dev:
+  pkg.installed
+libapache2-mod-wsgi:
+  pkg.installed
 {% elif grains['os'] == 'RedHat' %}
 Development Tools:
   pkg.group_installed
+libffi-devel:
+  pkg.installed
+mod_wsgi:
+  pkg.installed
 {% endif %}
 
-libffi-dev:
-  pkg.installed
-
-libapache2-mod-wsgi:
-  pkg.installed
 
 install-graphite-api:
   pip.installed:
