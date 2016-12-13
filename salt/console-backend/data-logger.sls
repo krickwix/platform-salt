@@ -88,7 +88,7 @@ console-backend-systemd:
         host_ip: {{ host_ip }}
         backend_app_port: {{ backend_app_port }}
         app_dir: {{ app_dir }}
-elasticsearch-systemctl_reload:
+console-backend-systemctl_reload:
   cmd.run:
     - name: /bin/systemctl daemon-reload
 {% endif %}
