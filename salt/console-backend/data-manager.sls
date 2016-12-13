@@ -105,7 +105,7 @@ console-backend-copy_upstart:
         backend_app_port: {{ backend_app_port }}
         app_dir: {{ app_dir }}
 {% elif grains['os'] == 'RedHat' %}
-console-backend-systemd:
+console-backend-dm-systemd:
   file.managed:
     - name: /usr/lib/systemd/system/data-manager.service
     - source: salt://console-backend/templates/backend_nodejs_app.service.tpl
@@ -114,7 +114,7 @@ console-backend-systemd:
         host_ip: {{ host_ip }}
         backend_app_port: {{ backend_app_port }}
         app_dir: {{ app_dir }}
-console-backend-systemctl_reload:
+console-backend-dm-systemctl_reload:
   cmd.run:
     - name: /bin/systemctl daemon-reload
 {% endif %}
@@ -130,5 +130,5 @@ data-manager:
 {% if grains['os'] == 'Ubuntu' %}
       - file: console-backend-copy_upstart
 {% elif grains['os'] == 'RedHat' %}
-      - file: console-backend-systemd
+      - file: console-backend-dm-systemd
 {% endif %}
