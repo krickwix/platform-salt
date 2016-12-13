@@ -31,13 +31,11 @@ python-carbon:
   pkg.installed
 {% endif %}
 
-
 install-graphite-api:
   pip.installed:
     - pkgs:
       - cairocffi == 0.6
       - graphite-api == 1.1.3
-
 
 configure_carbon_default:
   file.managed:
@@ -76,7 +74,7 @@ configure_nginx:
       - source: salt://graphite/files/graphite.conf
 configure_uwsgi:
   file.managed:
-    - name: /etc/uwsgi/apps-available/graphite-api.ini
+    - name: /etc/uwsgi.d/graphite-api.ini
     - source: salt://graphite/files/graphite-api.ini
 {% endif %}
 
