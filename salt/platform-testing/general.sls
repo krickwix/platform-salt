@@ -42,8 +42,13 @@ include:
 platform-testing-general-install_dev_deps:
   pkg.installed:
     - pkgs:
+{% if grains['os'] == 'Ubuntu' %}
       - libsasl2-dev
       - g++
+{% elif grains['os'] == 'RedHat' %}
+      - gcc-c++
+      - libgsasl-devel
+{% endif %}
 
 platform-testing-general-dl-and-extract:
   archive.extracted:

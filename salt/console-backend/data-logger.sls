@@ -88,9 +88,10 @@ console-backend-systemd:
         host_ip: {{ host_ip }}
         backend_app_port: {{ backend_app_port }}
         app_dir: {{ app_dir }}
-console-backend-systemctl_reload:
-  cmd.run:
-    - name: /bin/systemctl daemon-reload
+  module.run:
+    - name: service.systemctl_reload
+    - onchanges:
+      - file: console-backend-systemd
 {% endif %}
 
 # Restart the data logger component
