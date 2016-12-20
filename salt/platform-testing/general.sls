@@ -79,6 +79,7 @@ platform-testing-general-install-requirements-kafka:
     - require:
       - virtualenv: platform-testing-general-create-venv
 
+{% if grains['os'] == 'Ubuntu' %}
 platform-testing-general-kafka_upstart:
   file.managed:
     - source: salt://platform-testing/templates/platform-testing-general-kafka.conf.tpl
@@ -91,6 +92,22 @@ platform-testing-general-kafka_upstart:
       console_hosts: {{ console_hosts }}
       kafka_brokers: {{ kafka_brokers }}
       kafka_zookeepers: {{ kafka_zookeepers }}
+{% elif grains['os'] == 'RedHat' %}
+platform-testing-general-kafka_systemd:
+  file.managed:
+    - name: /usr/lib/systemd/system/platform-testing-general-kafka.service
+    - source: salt://console-backend/templates/platform-testing-general-kafka.service.tpl
+    - template: jinja
+    - defaults:
+        no_console_log: True
+        host_ip: {{ host_ip }}
+        backend_app_port: {{ backend_app_port }}
+        app_dir: {{ app_dir }}
+  module.run:
+    - name: service.systemctl_reload
+    - onchanges:
+      - file: platform-testing-general-kafka_systemd
+{% endif %}
 
 platform-testing-general-crontab-kafka:
   cron.present:
