@@ -122,6 +122,7 @@ platform-testing-general-install-requirements-zookeeper:
     - require:
       - virtualenv: platform-testing-general-create-venv
 
+{% if grains['os'] == 'Ubuntu' %}
 platform-testing-general-zookeeper-upstart:
   file.managed:
     - source: salt://platform-testing/templates/platform-testing-general-zookeeper.conf.tpl
@@ -133,6 +134,22 @@ platform-testing-general-zookeeper-upstart:
       platform_testing_package: {{ platform_testing_package }}
       console_hosts: {{ console_hosts }}
       kafka_zookeepers: {{ kafka_zookeepers }}
+{% elif grains['os'] == 'RedHat' %}
+platform-testing-general-zookeeper_systemd:
+  file.managed:
+    - name: /usr/lib/systemd/system/platform-testing-general-zookeeper.service
+    - source: salt://console-backend/templates/platform-testing-general-zookeeper.service.tpl
+    - template: jinja
+    - context:
+      platform_testing_directory: {{ platform_testing_directory }}
+      platform_testing_package: {{ platform_testing_package }}
+      console_hosts: {{ console_hosts }}
+      kafka_zookeepers: {{ kafka_zookeepers }}
+  module.run:
+    - name: service.systemctl_reload
+    - onchanges:
+      - file: platform-testing-general-kafka_systemd
+{% endif %}
 
 platform-testing-general-crontab-zookeeper:
   cron.present:
