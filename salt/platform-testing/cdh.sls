@@ -29,8 +29,13 @@ platform-testing-cdh-dl-and-extract:
 platform-testing-cdh-install_dev_deps:
   pkg.installed:
     - pkgs:
+{% if grains['os'] == 'Ubuntu' %}
       - libsasl2-dev
       - g++
+{% elif grains['os'] == 'RedHat' %}
+      - gcc-g++
+      - libgsasl-devel
+{% endif %}
 
 platform-testing-cdh-create-venv:
   virtualenv.managed:
