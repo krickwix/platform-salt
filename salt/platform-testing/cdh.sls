@@ -64,6 +64,7 @@ platform-testing-cdh-install-requirements-cdh:
     - require:
       - virtualenv: platform-testing-cdh-create-venv
 
+{% if grains['os'] == 'Ubuntu' %}
 platform-testing-cdh_upstart:
   file.managed:
     - source: salt://platform-testing/templates/platform-testing-cdh.conf.tpl
@@ -78,6 +79,22 @@ platform-testing-cdh_upstart:
       cm_port: {{ cm_port }}
       cm_username: {{ cm_username }}
       cm_password: {{ cm_password }}
+{% elif grains['os'] == 'RedHat' %}
+platform-testing-cdh_systemd:
+  file.managed:
+    - source: salt://platform-testing/templates/platform-testing-cdh.service.tpl
+    - name: /usr/lib/systemd/system/platform-testing-cdh.service
+    - mode: 644
+    - template: jinja
+    - context:
+      platform_testing_directory: {{ platform_testing_directory }}
+      platform_testing_package: {{ platform_testing_package }}
+      console_hoststring: {{ console_hoststring }}
+      cm_hoststring: {{ cm_hoststring }}
+      cm_port: {{ cm_port }}
+      cm_username: {{ cm_username }}
+      cm_password: {{ cm_password }}
+{% endif %}
 
 platform-testing-cdh-crontab-cdh:
   cron.present:
@@ -92,6 +109,7 @@ platform-testing-cdh-install-requirements-cdh_blackbox:
     - require:
       - virtualenv: platform-testing-cdh-create-venv
 
+{% if grains['os'] == 'Ubuntu' %}
 platform-testing-cdh-backbox_upstart:
   file.managed:
     - source: salt://platform-testing/templates/platform-testing-cdh-blackbox.conf.tpl
@@ -106,6 +124,22 @@ platform-testing-cdh-backbox_upstart:
       cm_port: {{ cm_port }}
       cm_username: {{ cm_username }}
       cm_password: {{ cm_password }}
+{% elif grains['os'] == 'RedHat' %}
+platform-testing-cdh-backbox_systemd:
+  file.managed:
+    - source: salt://platform-testing/templates/platform-testing-cdh-blackbox.service.tpl
+    - name: /usr/lib/systemd/system/platform-testing-cdh-blackbox.service
+    - mode: 644
+    - template: jinja
+    - context:
+      platform_testing_directory: {{ platform_testing_directory }}
+      platform_testing_package: {{ platform_testing_package }}
+      console_hoststring: {{ console_hoststring }}
+      cm_hoststring: {{ cm_hoststring }}
+      cm_port: {{ cm_port }}
+      cm_username: {{ cm_username }}
+      cm_password: {{ cm_password }}
+{% endif %}
 
 platform-testing-cdh-crontab-cdh_blackbox:
   cron.present:
