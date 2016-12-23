@@ -48,6 +48,7 @@ platform-testing-general-install_dev_deps:
 {% elif grains['os'] == 'RedHat' %}
       - gcc-c++
       - libgsasl-devel
+      - cyrus-sasl-devel
 {% endif %}
 
 platform-testing-general-dl-and-extract:

@@ -34,7 +34,7 @@ platform-testing-cdh-install_dev_deps:
       - g++
 {% elif grains['os'] == 'RedHat' %}
       - gcc-c++
-      - libgsasl-devel
+      - cyrus-sasl-devel
 {% endif %}
 
 platform-testing-cdh-create-venv:
