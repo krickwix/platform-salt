@@ -73,6 +73,7 @@ enable_uwsgi:
 selinux_graphite:
   cmd.run:
     - name: semanage port -a -t http_port_t -p tcp 8013
+    - unless: semanage port -l | grep 8013
 enable_nginx:
     file.managed:
       - name: /etc/nginx/conf.d/graphite.conf
