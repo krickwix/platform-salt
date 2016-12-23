@@ -61,7 +61,7 @@ package-repository-copy_systemd:
     - onchanges:
       - file: package-repository-copy_systemd
 package-repository-stop_package_repository:
-  service.stopped:
+  service.dead:
     - name: package-repository
     - enable: true
     - watch:
