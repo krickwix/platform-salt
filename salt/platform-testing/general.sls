@@ -148,7 +148,7 @@ platform-testing-general-zookeeper_systemd:
   module.run:
     - name: service.systemctl_reload
     - onchanges:
-      - file: platform-testing-general-kafka_systemd
+      - file: platform-testing-general-zookeeper_systemd
 {% endif %}
 
 platform-testing-general-crontab-zookeeper:
