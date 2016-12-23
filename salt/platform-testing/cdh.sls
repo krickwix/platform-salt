@@ -33,7 +33,7 @@ platform-testing-cdh-install_dev_deps:
       - libsasl2-dev
       - g++
 {% elif grains['os'] == 'RedHat' %}
-      - gcc-g++
+      - gcc-c++
       - libgsasl-devel
 {% endif %}
 
