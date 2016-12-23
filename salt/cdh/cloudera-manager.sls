@@ -14,7 +14,8 @@ cloudera-manager-add_cloudera_manager_repository:
     - file: /etc/apt/sources.list.d/cloudera.list
 {% elif grains['os'] == 'RedHat' %}
     - humanname: Cloudera Manager
-    - baseurl: http://archive.cloudera.com/cm5/redhat/7/x86_64/cm/
+    - baseurl: http://archive.cloudera.com/cm5/redhat/7/x86_64/cm/5/
+    - gpgkey: https://archive.cloudera.com/cm5/redhat/7/x86_64/cm/RPM-GPG-KEY-cloudera
 {% endif %}
 cloudera-manager-install_cloudera_manager:
   pkg.installed:
