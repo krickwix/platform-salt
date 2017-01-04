@@ -97,7 +97,7 @@ platform-testing-general-kafka_upstart:
 platform-testing-general-kafka_systemd:
   file.managed:
     - name: /usr/lib/systemd/system/platform-testing-general-kafka.service
-    - source: salt://console-backend/templates/platform-testing-general-kafka.service.tpl
+    - source: salt://platform-testing/templates/platform-testing-general-kafka.service.tpl
     - template: jinja
     - context:
       platform_testing_directory: {{ platform_testing_directory }}
