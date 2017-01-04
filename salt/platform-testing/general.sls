@@ -140,7 +140,7 @@ platform-testing-general-zookeeper-upstart:
 platform-testing-general-zookeeper_systemd:
   file.managed:
     - name: /usr/lib/systemd/system/platform-testing-general-zookeeper.service
-    - source: salt://console-backend/templates/platform-testing-general-zookeeper.service.tpl
+    - source: salt://platform-testing/templates/platform-testing-general-zookeeper.service.tpl
     - template: jinja
     - context:
       platform_testing_directory: {{ platform_testing_directory }}
