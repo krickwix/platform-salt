@@ -99,11 +99,12 @@ platform-testing-general-kafka_systemd:
     - name: /usr/lib/systemd/system/platform-testing-general-kafka.service
     - source: salt://console-backend/templates/platform-testing-general-kafka.service.tpl
     - template: jinja
-    - defaults:
-        no_console_log: True
-        host_ip: {{ host_ip }}
-        backend_app_port: {{ backend_app_port }}
-        app_dir: {{ app_dir }}
+    - context:
+      platform_testing_directory: {{ platform_testing_directory }}
+      platform_testing_package: {{ platform_testing_package }}
+      console_hosts: {{ console_hosts }}
+      kafka_brokers: {{ kafka_brokers }}
+      kafka_zookeepers: {{ kafka_zookeepers }}
   module.run:
     - name: service.systemctl_reload
     - onchanges:
