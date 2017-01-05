@@ -167,6 +167,7 @@ platform-testing-general-install-requirements-dm-blackbox:
     - require:
       - virtualenv: platform-testing-general-create-venv
 
+{% if grains['os'] == 'Ubuntu' %}
 platform-testing-general-dm-blackbox_upstart:
   file.managed:
     - source: salt://platform-testing/templates/platform-testing-general-dm-blackbox.conf.tpl
@@ -184,4 +185,23 @@ platform-testing-general-crontab-dm-blackbox:
     - identifier: PLATFORM-TESTING-DM-BLACKBOX
     - user: root
     - name: /sbin/start platform-testing-general-dm-blackbox
+{% elif grains['os'] == 'RedHat' %}
+platform-testing-general-dm-blackbox_systemd:
+  file.managed:
+    - source: salt://platform-testing/templates/platform-testing-general-dm-blackbox.service.tpl
+    - name: /usr/lib/systemd/system/platform-testing-general-dm-blackbox.service
+    - mode: 644
+    - template: jinja
+    - context:
+      platform_testing_directory: {{ platform_testing_directory }}
+      platform_testing_package: {{ platform_testing_package }}
+      console_hosts: {{ console_hosts }}
+      dm_hosts: {{ dm_hosts }}
+platform-testing-general-crontab-dm-blackbox:
+  cron.present:
+    - identifier: PLATFORM-TESTING-DM-BLACKBOX
+    - user: root
+    - name: /bin/systemctl platform-testing-general-dm-blackbox
+{%- endif %}
+
 {%- endif %}
