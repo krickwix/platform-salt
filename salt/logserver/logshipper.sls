@@ -104,12 +104,12 @@ logshipper-copy_systemd:
     - template: jinja
     - defaults:
         install_dir: {{ install_dir }}
-  logshipper:
-    service.runnning:
-      - enable: True
-      - reload: True
-      - watch:
-        - file: logshipper-copy_systemd
+logshipper:
+  service.runnning:
+    - enable: True
+    - reload: True
+    - watch:
+      - file: logshipper-copy_systemd
 {% endif %}
 
 logshipper-stop_service:
