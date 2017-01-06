@@ -3,6 +3,9 @@
 {% set pnda_group = pillar['pnda']['group'] %}
 {% set pnda_home_directory = pillar['pnda']['homedir'] %}
 
+permissive:
+    selinux.mode
+
 pnda-create_pnda_user:
   user.present:
     - name: {{ pnda_user }}
