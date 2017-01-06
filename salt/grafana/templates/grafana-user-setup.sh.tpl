@@ -1,13 +1,6 @@
 #!/bin/bash
 set -e
 
-{% if grains['os'] == 'Ubuntu' %}
-while ! nc -z localhost 3000; do
-  sleep 1
-done
-sleep 1
-{% endif %}
-
 while true==true; do (echo > /dev/tcp/localhost/3000)>/dev/null 2>&1 && break || sleep 1;done
 
 # Exit if the pnda user already exists
