@@ -105,7 +105,7 @@ logshipper-copy_systemd:
     - defaults:
         install_dir: {{ install_dir }}
 logshipper-service_enabled:
-  service.runnning:
+  service.running:
     - name: logshipper
     - enable: True
     - reload: True
