@@ -3,9 +3,6 @@
 include:
   - java
 
-permissive:
-    selinux.mode
-
 cloudera-manager-add_cloudera_manager_repository:
   pkgrepo.managed:
 {% if grains['os'] == 'Ubuntu' %}
