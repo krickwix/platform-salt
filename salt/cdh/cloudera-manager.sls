@@ -31,13 +31,13 @@ cloudera-manager-install_cloudera_manager:
       - cloudera-manager-daemons
       - cloudera-manager-server
 
-cloudera-manager-create_ext_db:
-  cmd.run:
-    - name: /usr/share/cmf/schema/scm_prepare_database.sh mysql -h {{ cmdb_host }} -uroot -p{{ mysql_root_password }} --scm-host {{ cm_host }} {{ cmdb_database }} {{ cmdb_user }} {{ cmdb_password }}
-    - onlyif: grep 'com.cloudera.cmf.db.setupType=INIT' /etc/cloudera-scm-server/db.properties
-
 cloudera-manager-ensure_cloudera_manager_started:
   service.running:
     - name: cloudera-scm-server
     - enable: True
     - reload: True
+
+cloudera-manager-create_ext_db:
+  cmd.run:
+    - name: /usr/share/cmf/schema/scm_prepare_database.sh mysql -h {{ cmdb_host }} -uroot -p{{ mysql_root_password }} --scm-host {{ cm_host }} {{ cmdb_database }} {{ cmdb_user }} {{ cmdb_password }}
+    - onlyif: grep 'com.cloudera.cmf.db.setupType=INIT' /etc/cloudera-scm-server/db.properties
