@@ -4,16 +4,21 @@ python-pip-install-pip-package:
 {% if grains['os'] == 'Ubuntu' %}
       - python-pip
       - python-dev
+<<<<<<< HEAD
       - python-virtualenv
 {% elif grains['os'] == 'RedHat' %}
       - python2-pip
       - python-devel
       - python-virtualenv
 {% endif %}
+=======
+>>>>>>> pndaproject/develop
 
 python-pip-install_python_pip:
   pip.installed:
-    - name: pip == 8.1.2
+    - pkgs:
+      - pip == 9.0.1
+      - virtualenv == 15.1.0
     - upgrade: True
     - reload_modules: True
     - require:

@@ -1,4 +1,5 @@
 # based on http://graphite-api.readthedocs.io/en/latest/deployment.html#nginx-uwsgi
+{% set virtual_env_dir = '/opt/pnda/graphite-api' %}
 
 include:
   - python-pip
@@ -8,11 +9,15 @@ graphite-reqs:
   pkg.installed:
     - refresh: True
     - pkgs:
-      - build-essential
       - python-dev
+      - build-essential
+      - libcairo2-dev
+      - libffi-dev
+      - graphite-carbon
       - nginx
       - uwsgi
       - uwsgi-plugin-python
+<<<<<<< HEAD
       - libcairo2-dev
 libffi-dev:
   pkg.installed
@@ -38,37 +43,60 @@ install-graphite-api:
     - pkgs:
       - cairocffi == 0.6
       - graphite-api == 1.1.3
+=======
+
+graphite-create-virtualenv:
+  virtualenv.managed:
+    - name: {{ virtual_env_dir }}
+    - requirements: salt://graphite/files/requirements.txt
+    - require:
+      - pip: python-pip-install_python_pip
+>>>>>>> pndaproject/develop
 
 configure_carbon_default:
   file.managed:
     - name: /etc/default/graphite-carbon
     - source: salt://graphite/files/graphite-carbon
+    - require:
+      - pkg: graphite-reqs
 
 configure_carbon:
   file.managed:
     - name: /etc/carbon/carbon.conf
     - source: salt://graphite/files/carbon.conf
+    - require:
+      - pkg: graphite-reqs
 
 {% if grains['os'] == 'Ubuntu' %}
 configure_nginx:
   file.managed:
     - name: /etc/nginx/sites-available/graphite.conf
     - source: salt://graphite/files/graphite.conf
+    - require:
+      - pkg: graphite-reqs
 
 enable_nginx:
   file.symlink:
     - name: /etc/nginx/sites-enabled/graphite.conf
     - target: /etc/nginx/sites-available/graphite.conf
+    - require:
+      - file: configure_nginx
 
 configure_uwsgi:
   file.managed:
     - name: /etc/uwsgi/apps-available/graphite-api.ini
-    - source: salt://graphite/files/graphite-api.ini
+    - source: salt://graphite/templates/graphite-api.ini
+    - template: jinja
+    - context:
+      virtual_env_dir: {{ virtual_env_dir }}
+    - require:
+      - pkg: graphite-reqs
 
 enable_uwsgi:
   file.symlink:
     - name: /etc/uwsgi/apps-enabled/graphite-api.ini
     - target: /etc/uwsgi/apps-available/graphite-api.ini
+<<<<<<< HEAD
 {% elif grains['os'] == 'RedHat' %}
 selinux_graphite:
   cmd.run:
@@ -83,6 +111,10 @@ enable_uwsgi:
     - name: /etc/uwsgi.d/graphite-api.ini
     - source: salt://graphite/files/graphite-api.ini
 {% endif %}
+=======
+    - require:
+      - virtualenv: graphite-create-virtualenv
+>>>>>>> pndaproject/develop
 
 configure_graphite_yaml:
   file.managed:
@@ -93,6 +125,8 @@ configure_storage_schemas:
   file.managed:
     - name: /etc/carbon/storage-schemas.conf
     - source: salt://graphite/files/storage-schemas.conf
+    - require:
+      - pkg: graphite-reqs
 
 /srv/graphite:
   file.directory:
@@ -113,6 +147,9 @@ ensure_nginx_running:
   service.running:
     - name: nginx
     - enable: True
+    - require:
+      - file: configure_graphite_yaml
+      - file: enable_uwsgi
     - watch:
 {% if grains['os'] == 'Ubuntu' %}
       - file: configure_nginx
@@ -123,6 +160,8 @@ ensure_uwsgi_running:
   service.running:
     - name: uwsgi
     - enable: True
+    - require:
+      - service: ensure_nginx_running
     - watch:
 {% if grains['os'] == 'Ubuntu' %}
       - file: configure_uwsgi

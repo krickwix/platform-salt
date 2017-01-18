@@ -173,12 +173,12 @@ def process_parcel_state(cluster, product, parcel_version, check_complete):
             logging.info("Parcel Error: %s", str(parcel.state.errors))
             logging.info("Retrying...")
             error_count += 1
-            if error_count > 5:
+            if error_count > 30:
                 raise Exception(str(parcel.state.errors))
             else:
-                time.sleep(15)
+                time.sleep(60)
 
-        time.sleep(15)
+        time.sleep(30)
 
 
 def check_parcel_download_state(parcel):
@@ -747,7 +747,7 @@ def setup_sharedlib(nodes, user, key_name, hdfs, cm_api):
         'ssh_username': user,
         'ssh_pem_file': key_name,
         'ssh_commands': [
-            ['python', '/tmp/install_sharedlib.py', '-n', nnode_detail['private_addr']]
+            ['/tmp/pnda-install/cdh.setup_hadoop/venv/bin/python', '/tmp/pnda-install/cdh.setup_hadoop/install_sharedlib.py', '-n', nnode_detail['private_addr']]
         ]
     }
     setup_remotehost(cmd_config)
