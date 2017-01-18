@@ -58,6 +58,8 @@ mysql-mysql-running:
     - name: mysql
 {% elif grains['os'] == 'RedHat' %}
     - name: mariadb
+    - enable: True
+    - reload: True
 {% endif %}
     - watch:
       - pkg: mysql-install-mysql-server
