@@ -17,7 +17,6 @@ graphite-reqs:
       - nginx
       - uwsgi
       - uwsgi-plugin-python
-<<<<<<< HEAD
       - libcairo2-dev
 libffi-dev:
   pkg.installed
@@ -43,7 +42,6 @@ install-graphite-api:
     - pkgs:
       - cairocffi == 0.6
       - graphite-api == 1.1.3
-=======
 
 graphite-create-virtualenv:
   virtualenv.managed:
@@ -51,7 +49,6 @@ graphite-create-virtualenv:
     - requirements: salt://graphite/files/requirements.txt
     - require:
       - pip: python-pip-install_python_pip
->>>>>>> pndaproject/develop
 
 configure_carbon_default:
   file.managed:
@@ -96,7 +93,6 @@ enable_uwsgi:
   file.symlink:
     - name: /etc/uwsgi/apps-enabled/graphite-api.ini
     - target: /etc/uwsgi/apps-available/graphite-api.ini
-<<<<<<< HEAD
 {% elif grains['os'] == 'RedHat' %}
 selinux_graphite:
   cmd.run:
@@ -111,10 +107,8 @@ enable_uwsgi:
     - name: /etc/uwsgi.d/graphite-api.ini
     - source: salt://graphite/files/graphite-api.ini
 {% endif %}
-=======
     - require:
       - virtualenv: graphite-create-virtualenv
->>>>>>> pndaproject/develop
 
 configure_graphite_yaml:
   file.managed:

@@ -4,15 +4,12 @@ python-pip-install-pip-package:
 {% if grains['os'] == 'Ubuntu' %}
       - python-pip
       - python-dev
-<<<<<<< HEAD
       - python-virtualenv
 {% elif grains['os'] == 'RedHat' %}
       - python2-pip
       - python-devel
       - python-virtualenv
 {% endif %}
-=======
->>>>>>> pndaproject/develop
 
 python-pip-install_python_pip:
   pip.installed:

@@ -34,7 +34,6 @@ reboot-copy_upstart:
     - template: jinja
     - defaults:
         install_dir: {{ install_dir }}
-<<<<<<< HEAD
 {% elif grains['os'] == 'RedHat' %}
 reboot-copy_systemd:
   file.managed:
@@ -44,5 +43,3 @@ reboot-copy_systemd:
     - defaults:
         install_dir: {{ install_dir }}
 {% endif %}
-=======
->>>>>>> pndaproject/develop

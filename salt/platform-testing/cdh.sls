@@ -106,12 +106,8 @@ platform-testing-cdh-install-requirements-cdh_blackbox:
     - require:
       - virtualenv: platform-testing-cdh-create-venv
 
-<<<<<<< HEAD
 {% if grains['os'] == 'Ubuntu' %}
 platform-testing-cdh-backbox_upstart:
-=======
-platform-testing-cdh-blackbox_upstart:
->>>>>>> pndaproject/develop
   file.managed:
     - source: salt://platform-testing/templates/platform-testing-cdh-blackbox.conf.tpl
     - name: /etc/init/platform-testing-cdh-blackbox.conf
