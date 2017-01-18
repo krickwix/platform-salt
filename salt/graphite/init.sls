@@ -111,7 +111,7 @@ enable_nginx:
 enable_uwsgi:
   file.managed:
     - name: /etc/uwsgi.d/graphite-api.ini
-    - source: salt://graphite/files/graphite-api.ini
+    - source: salt://graphite/templates/graphite-api.ini
 {% endif %}
     - require:
       - virtualenv: graphite-create-virtualenv
