@@ -54,23 +54,29 @@ configure_carbon_default:
   file.managed:
     - name: /etc/default/graphite-carbon
     - source: salt://graphite/files/graphite-carbon
+{% if grains['os'] == 'Ubuntu' %}
     - require:
       - pkg: graphite-reqs
+{% endif %}
 
 configure_carbon:
   file.managed:
     - name: /etc/carbon/carbon.conf
     - source: salt://graphite/files/carbon.conf
+{% if grains['os'] == 'Ubuntu' %}
     - require:
       - pkg: graphite-reqs
+{% endif %}
 
 {% if grains['os'] == 'Ubuntu' %}
 configure_nginx:
   file.managed:
     - name: /etc/nginx/sites-available/graphite.conf
     - source: salt://graphite/files/graphite.conf
+{% if grains['os'] == 'Ubuntu' %}
     - require:
       - pkg: graphite-reqs
+{% endif %}
 
 enable_nginx:
   file.symlink:
