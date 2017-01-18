@@ -97,7 +97,11 @@ platform-testing-cdh-crontab-cdh:
     - name: /sbin/start platform-testing-cdh
     - require:
       - pip: platform-testing-cdh-install-requirements-cdh
+{% if grains['os'] == 'Ubuntu' %}
       - file: platform-testing-cdh_upstart
+{% elif grains['os'] == 'RedHat' %}
+      - file: platform-testing-cdh_systemd
+{% endif %}
 
 platform-testing-cdh-install-requirements-cdh_blackbox:
   pip.installed:
