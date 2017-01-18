@@ -46,7 +46,11 @@ mysql_root_password:
 
 mysql-update-mysql-configuration:
   file.replace:
+{% if grains['os'] == 'Ubuntu' %}
     - name: /etc/mysql/my.cnf
+{% elif grains['os'] == 'RedHat' %}
+    - name: /etc/my.cnf
+{% endif %}
     - pattern: bind-address\s*=.*$
     - repl: bind-address      = 0.0.0.0
     - require:
