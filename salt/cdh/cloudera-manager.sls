@@ -39,3 +39,5 @@ cloudera-manager-create_ext_db:
 cloudera-manager-ensure_cloudera_manager_started:
   service.running:
     - name: cloudera-scm-server
+    - enable: True
+    - reload: True
