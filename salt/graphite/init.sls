@@ -125,8 +125,10 @@ configure_storage_schemas:
   file.managed:
     - name: /etc/carbon/storage-schemas.conf
     - source: salt://graphite/files/storage-schemas.conf
+{% if grains['os'] == 'Ubuntu' %}
     - require:
       - pkg: graphite-reqs
+{% endif %}
 
 /srv/graphite:
   file.directory:
