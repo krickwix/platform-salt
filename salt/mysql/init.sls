@@ -67,4 +67,8 @@ mysql-mysql-running:
 {% endif %}
     - watch:
       - pkg: mysql-install-mysql-server
+{% if grains['os'] == 'Ubuntu' %}
       - file: /etc/mysql/my.cnf
+{% elif grains['os'] == 'RedHat' %}
+      - file: /etc/my.cnf
+{% endif %}
