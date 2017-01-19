@@ -126,7 +126,7 @@ platform-testing-cdh-backbox_upstart:
       cm_username: {{ cm_username }}
       cm_password: {{ cm_password }}
 {% elif grains['os'] == 'RedHat' %}
-platform-testing-cdh-backbox_systemd:
+platform-testing-cdh-blackbox_systemd:
   file.managed:
     - source: salt://platform-testing/templates/platform-testing-cdh-blackbox.service.tpl
     - name: /usr/lib/systemd/system/platform-testing-cdh-blackbox.service
@@ -152,5 +152,5 @@ platform-testing-cdh-crontab-cdh_blackbox:
 {% if grains['os'] == 'Ubuntu' %}
       - file: platform-testing-cdh-blackbox_upstart
 {% elif grains['os'] == 'RedHat' %}
-      - file: platform-testing-cdh-backbox_systemd
+      - file: platform-testing-cdh-blackbox_systemd
 {% endif %}
