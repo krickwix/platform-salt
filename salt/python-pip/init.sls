@@ -4,11 +4,9 @@ python-pip-install-pip-package:
 {% if grains['os'] == 'Ubuntu' %}
       - python-pip
       - python-dev
-      - python-virtualenv
 {% elif grains['os'] == 'RedHat' %}
       - python2-pip
       - python-devel
-      - python-virtualenv
 {% endif %}
 
 python-pip-install_python_pip:
@@ -16,7 +14,6 @@ python-pip-install_python_pip:
     - pkgs:
       - pip == 9.0.1
       - virtualenv == 15.1.0
-      - setuptools
     - upgrade: True
     - reload_modules: True
     - require:
