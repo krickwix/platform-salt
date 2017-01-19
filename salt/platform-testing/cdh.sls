@@ -149,4 +149,8 @@ platform-testing-cdh-crontab-cdh_blackbox:
     - name: /sbin/start platform-testing-cdh-blackbox
     - require:
       - pip: platform-testing-cdh-install-requirements-cdh_blackbox
+{% if grains['os'] == 'Ubuntu' %}
       - file: platform-testing-cdh-blackbox_upstart
+{% elif grains['os'] == 'RedHat' %}
+      - file: platform-testing-cdh-backbox_systemd
+{% endif %}
