@@ -32,7 +32,7 @@ cloudera-manager-install_cloudera_manager:
       - cloudera-manager-daemons
       - cloudera-manager-server
 
-{% elif grains['os'] == 'RedHat' %}
+{% if grains['os'] == 'RedHat' %}
 cloudera-manager-ensure_cloudera_manager_enabled:
   cmd.run:
     - name: /bin/systemctl enable cloudera-scm-server
