@@ -25,11 +25,18 @@ cloudera-manager-add_cloudera_manager_repository:
     - baseurl: http://archive.cloudera.com/cm5/redhat/7/x86_64/cm/5/
     - gpgkey: https://archive.cloudera.com/cm5/redhat/7/x86_64/cm/RPM-GPG-KEY-cloudera
 {% endif %}
+
 cloudera-manager-install_cloudera_manager:
   pkg.installed:
     - pkgs:
       - cloudera-manager-daemons
       - cloudera-manager-server
+
+{% elif grains['os'] == 'RedHat' %}
+cloudera-manager-ensure_cloudera_manager_enabled:
+  cmd.run:
+    - name: /bin/systemctl enable cloudera-scm-server
+{% endif %}
 
 cloudera-manager-ensure_cloudera_manager_started:
   service.running:
