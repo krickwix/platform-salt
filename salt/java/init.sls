@@ -4,12 +4,6 @@
 #}
 {%- from 'java/settings.sls' import java with context %}
 
-java-remove-others:
-  pkg.removed:
-    - pkgs:
-        - java-1.8.0-openjdk
-        - java-1.8.0-openjdk-headless
-
 # require a source_url - there is no default download location for a jdk
 {%- if java.source_url is defined %}
 
