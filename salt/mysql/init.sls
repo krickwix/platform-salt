@@ -58,6 +58,18 @@ mysql-update-mysql-configuration:
     - require:
       - pkg: mysql-install-mysql-server
 
+mysql-update-mysql-configuration2:
+  file.replace:
+{% if grains['os'] == 'Ubuntu' %}
+    - name: /etc/mysql/my.cnf
+{% elif grains['os'] == 'RedHat' %}
+    - name: /etc/my.cnf
+{% endif %}
+    - pattern: '# Recommended in standard MySQL setup'
+    - repl: skip-name-resolve
+    - require:
+      - pkg: mysql-install-mysql-server
+
 mysql-mysql-running:
   service.running:
 {% if grains['os'] == 'Ubuntu' %}
