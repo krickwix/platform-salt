@@ -3,6 +3,14 @@
 include:
   - .connector
 
+{% if grains['os'] == 'RedHat' %}
+mysql-add-repository:
+  pkgrepo.managed:
+    - humanname: mysqlserver
+    - baseurl: https://repo.mysql.com/yum/mysql-5.7-community/el/7/$basearch/
+    - gpgkey: https://repo.mysql.com/RPM-GPG-KEY-mysql
+{% endif %}
+
 {% if grains['os'] == 'Ubuntu' %}
 mysql-install-debconf-utils:
   pkg.installed:
@@ -35,13 +43,7 @@ mysql-install-mysql-server:
     - require:
       - debconf: mysql-setup-mysql
 {% elif grains['os'] == 'RedHat' %}
-    - name: mariadb-server
-mysql_root_password:
-  cmd.run:
-    - name: mysqladmin --user root password '{{ mysql_root_password|replace("'", "'\"'\"'") }}'
-    - unless: mysql --user root --password='{{ mysql_root_password|replace("'", "'\"'\"'") }}' --execute="SELECT 1;"
-    - require:
-      - service: mysql-mysql-running
+    - name: mysql-community-server
 {% endif %}
 
 mysql-update-mysql-configuration:
@@ -61,7 +63,7 @@ mysql-mysql-running:
 {% if grains['os'] == 'Ubuntu' %}
     - name: mysql
 {% elif grains['os'] == 'RedHat' %}
-    - name: mariadb
+    - name: mysqld
     - enable: True
     - reload: True
 {% endif %}
