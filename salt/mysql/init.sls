@@ -7,7 +7,7 @@ include:
 mysql-add-repository:
   pkgrepo.managed:
     - humanname: mysqlserver
-    - baseurl: https://repo.mysql.com/yum/mysql-5.7-community/el/7/$basearch/
+    - baseurl: https://repo.mysql.com/yum/mysql-5.5-community/el/7/$basearch/
     - gpgkey: https://repo.mysql.com/RPM-GPG-KEY-mysql
 {% endif %}
 
