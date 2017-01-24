@@ -75,7 +75,7 @@ mysql-mysql-running:
       - file: /etc/my.cnf
 {% endif %}
 
-{% elif grains['os'] == 'RedHat' %}
+{% if grains['os'] == 'RedHat' %}
 mysql_root_password:
   cmd.run:
     - name: mysqladmin --user root password '{{ mysql_root_password|replace("'", "'\"'\"'") }}'
