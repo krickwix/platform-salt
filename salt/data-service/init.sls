@@ -47,8 +47,13 @@ data-service-copy_config:
 
 data-service-copy_upstart:
   file.managed:
+{% if grains['os'] == 'Ubuntu' %}
     - name: /etc/init/dataservice.conf
     - source: salt://data-service/templates/data-service.conf.tpl
+{% elif grains['os'] == 'RedHat' %}
+    - name: /usr/lib/systemd/system/dataservice.service
+    - source: salt://data-service/templates/data-service.service.tpl
+{%- endif %}
     - template: jinja
     - defaults:
         install_dir: {{ install_dir }}
