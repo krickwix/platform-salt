@@ -5,4 +5,4 @@ Description=dataset manager service
 Type=simple
 User=hdfs
 WorkingDirectory={{ install_dir }}/data-service
-ExecStart=/bin/python {{ install_dir }}/data-service/apiserver.py
+ExecStart={{ install_dir }}/data-service/venv/bin/python {{ install_dir }}/data-service/apiserver.py
