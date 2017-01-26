@@ -57,8 +57,13 @@ hdfs-cleaner-copy_config:
 
 hdfs-cleaner-copy_upstart:
   file.managed:
+{% if grains['os'] == 'Ubuntu' %}
     - name: /etc/init/hdfs-cleaner.conf
     - source: salt://hdfs-cleaner/templates/hdfs-cleaner.conf.tpl
+{% elif grains['os'] == 'RedHat' %}
+    - name: /usr/lib/systemd/system/hdfs-cleaner.service
+    - source: salt://hdfs-cleaner/templates/hdfs-cleaner.service.tpl
+{%- endif %}
     - template: jinja
     - defaults:
         install_dir: {{ install_dir }}
@@ -66,7 +71,11 @@ hdfs-cleaner-copy_upstart:
 hdfs-cleaner-add_crontab_entry:
   cron.present:
     - identifier: HDFS-CLEANER
+{% if grains['os'] == 'Ubuntu' %}
     - name: /sbin/start hdfs-cleaner
+{% elif grains['os'] == 'RedHat' %}
+    - name: /bin/systemctl hdfs-cleaner
+{%- endif %}
     - user: root
     - hour: '*/4'
     - minute: 0
