@@ -14,6 +14,7 @@ jupyter-create-venv:
     - name: {{ virtual_env_dir }}
     - python: python3
     - requirements: salt://jupyter/files/requirements-jupyter.txt
+    - python: python2
     - require:
       - pip: python-pip-install_python_pip
 

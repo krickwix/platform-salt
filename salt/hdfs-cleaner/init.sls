@@ -30,6 +30,7 @@ hdfs-cleaner-create-venv:
   virtualenv.managed:
     - name: {{ virtual_env_dir }}
     - requirements: salt://hdfs-cleaner/files/requirements.txt
+    - python: python2
     - require:
       - pip: python-pip-install_python_pip
       - archive: hdfs-cleaner-dl-and-extract

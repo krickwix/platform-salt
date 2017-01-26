@@ -64,6 +64,7 @@ platform-testing-general-create-venv:
   virtualenv.managed:
     - name: {{ virtual_env_dir }}
     - requirements: {{ platform_testing_directory }}/{{platform_testing_package}}-{{ platform_testing_version }}/requirements.txt
+    - python: python2
     - require:
       - pip: python-pip-install_python_pip
       - archive: platform-testing-general-dl-and-extract

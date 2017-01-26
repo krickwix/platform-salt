@@ -47,6 +47,7 @@ graphite-create-virtualenv:
   virtualenv.managed:
     - name: {{ virtual_env_dir }}
     - requirements: salt://graphite/files/requirements.txt
+    - python: python2
     - require:
       - pip: python-pip-install_python_pip
 

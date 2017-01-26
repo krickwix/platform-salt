@@ -23,6 +23,7 @@ package-repository-create-venv:
   virtualenv.managed:
     - name: {{ virtual_env_dir }}
     - requirements: {{ install_dir }}/{{ package_repository_directory_name }}/requirements.txt
+    - python: python2
     - reload_modules: True
     - require:
       - pip: python-pip-install_python_pip

@@ -23,6 +23,7 @@ data-service-create-venv:
   virtualenv.managed:
     - name: {{ virtual_env_dir }}
     - requirements: salt://data-service/files/requirements.txt
+    - python: python2
     - reload_modules: True
     - require:
       - pip: python-pip-install_python_pip

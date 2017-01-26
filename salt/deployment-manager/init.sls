@@ -34,6 +34,7 @@ deployment-manager-create-venv:
   virtualenv.managed:
     - name: {{ virtual_env_dir }}
     - requirements: {{ install_dir }}/{{ deployment_manager_directory_name }}/requirements.txt
+    - python: python2
     - reload_modules: True
     - require:
       - archive: deployment-manager-dl-and-extract
@@ -83,7 +84,7 @@ deployment-manager-stop_deployment_manager:
 deployment-manager-copy_systemd:
   file.managed:
     - name: /usr/lib/systemd/system/deployment-manager.service
-    - source: salt://package-repository/templates/deployment-manager.service.tpl
+    - source: salt://deployment-manager/templates/deployment-manager.service.tpl
     - template: jinja
     - defaults:
         install_dir: {{ install_dir }}
