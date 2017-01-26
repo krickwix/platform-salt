@@ -19,6 +19,14 @@ opentsdb-server:
     - sources:
       - opentsdb: {{ opentsdb_pkg_location }}
 
+{% if grains['os'] == 'RedHat' %}
+opentsdb-copy_upstart:
+  file.managed:
+    - name: /usr/lib/systemd/system/opentsdb.service
+    - source: salt://opentsdb/templates/opentsdb.service.tpl
+    - template: jinja
+{%- endif %}
+
 opentsdb-service_start:
   service.running:
     - name: opentsdb
