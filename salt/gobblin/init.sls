@@ -92,6 +92,12 @@ gobblin-install_gobblin_upstart_script:
       gobblin_work_dir: {{ gobblin_hdfs_work_dir }}
       gobblin_job_file: {{ gobblin_link_dir }}/configs/mr.pull
 
+{% if grains['os'] == 'RedHat' %}
+gobblin-systemctl_reload:
+  cmd.run:
+    - name: /bin/systemctl daemon-reload
+{%- endif %}
+
 gobblin-add_gobblin_crontab_entry:
   cron.present:
     - identifier: GOBBLIN

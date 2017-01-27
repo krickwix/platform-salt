@@ -131,3 +131,9 @@ platform-testing-cdh-crontab-cdh_blackbox:
     - require:
       - pip: platform-testing-cdh-install-requirements-cdh_blackbox
       - file: platform-testing-cdh-blackbox_upstart
+
+{% if grains['os'] == 'RedHat' %}
+platform-testing-cdh-systemctl_reload:
+  cmd.run:
+    - name: /bin/systemctl daemon-reload
+{%- endif %}

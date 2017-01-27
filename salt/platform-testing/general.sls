@@ -180,4 +180,9 @@ platform-testing-general-crontab-dm-blackbox:
 
 {% endif %}
 
+{% if grains['os'] == 'RedHat' %}
+platform-testing-general-systemctl_reload:
+  cmd.run:
+    - name: /bin/systemctl daemon-reload
+{%- endif %}
 

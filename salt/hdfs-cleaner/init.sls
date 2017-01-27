@@ -69,6 +69,12 @@ hdfs-cleaner-copy_upstart:
     - defaults:
         install_dir: {{ install_dir }}
 
+{% if grains['os'] == 'RedHat' %}
+hdfs-cleaner-systemctl_reload:
+  cmd.run:
+    - name: /bin/systemctl daemon-reload
+{%- endif %}
+
 hdfs-cleaner-add_crontab_entry:
   cron.present:
     - identifier: HDFS-CLEANER

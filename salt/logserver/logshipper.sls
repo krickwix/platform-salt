@@ -113,6 +113,12 @@ logshipper-service_enabled:
       - file: logshipper-copy_systemd
 {% endif %}
 
+{% if grains['os'] == 'RedHat' %}
+logshipper-systemctl_reload:
+  cmd.run:
+    - name: /bin/systemctl daemon-reload
+{%- endif %}
+
 logshipper-stop_service:
   cmd.run:
 {% if grains['os'] == 'Ubuntu' %}
