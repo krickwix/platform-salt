@@ -75,7 +75,7 @@ hdfs-cleaner-add_crontab_entry:
 {% if grains['os'] == 'Ubuntu' %}
     - name: /sbin/start hdfs-cleaner
 {% elif grains['os'] == 'RedHat' %}
-    - name: /bin/systemctl hdfs-cleaner
+    - name: /bin/systemctl start hdfs-cleaner
 {%- endif %}
     - user: root
     - hour: '*/4'

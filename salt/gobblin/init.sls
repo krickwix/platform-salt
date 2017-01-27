@@ -98,7 +98,7 @@ gobblin-add_gobblin_crontab_entry:
 {% if grains['os'] == 'Ubuntu' %}
     - name: /sbin/start gobblin
 {% elif grains['os'] == 'RedHat' %}
-    - name: /bin/systemctl gobblin
+    - name: /bin/systemctl start gobblin
 {%- endif %}
     - user: root
     - minute: 0,30

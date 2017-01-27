@@ -106,7 +106,7 @@ platform-testing-general-crontab-kafka:
 {% if grains['os'] == 'Ubuntu' %}
     - name: /sbin/start platform-testing-general-kafka
 {% elif grains['os'] == 'RedHat' %}
-    - name: /bin/systemctl platform-testing-general-kafka
+    - name: /bin/systemctl start platform-testing-general-kafka
 {% endif %}
 
 platform-testing-general-install-requirements-zookeeper:
@@ -140,7 +140,7 @@ platform-testing-general-crontab-zookeeper:
 {% if grains['os'] == 'Ubuntu' %}
     - name: /sbin/start platform-testing-general-zookeeper
 {% elif grains['os'] == 'RedHat' %}
-    - name: /bin/systemctl platform-testing-general-zookeeper
+    - name: /bin/systemctl start platform-testing-general-zookeeper
 {% endif %}
 
 {%- if dm_hosts is not none and dm_hosts|length > 0 %}
@@ -175,7 +175,7 @@ platform-testing-general-crontab-dm-blackbox:
 {% if grains['os'] == 'Ubuntu' %}
     - name: /sbin/start platform-testing-general-dm-blackbox
 {% elif grains['os'] == 'RedHat' %}
-    - name: /bin/systemctl platform-testing-general-dm-blackbox
+    - name: /bin/systemctl start platform-testing-general-dm-blackbox
 {% endif %}
 
 

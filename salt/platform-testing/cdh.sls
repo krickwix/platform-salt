@@ -86,7 +86,7 @@ platform-testing-cdh-crontab-cdh:
 {% if grains['os'] == 'Ubuntu' %}
     - name: /sbin/start platform-testing-cdh
 {% elif grains['os'] == 'RedHat' %}
-    - name: /bin/systemctl platform-testing-cdh
+    - name: /bin/systemctl start platform-testing-cdh
 {% endif %}
     - require:
       - pip: platform-testing-cdh-install-requirements-cdh
@@ -126,7 +126,7 @@ platform-testing-cdh-crontab-cdh_blackbox:
 {% if grains['os'] == 'Ubuntu' %}
     - name: /sbin/start platform-testing-cdh-blackbox
 {% elif grains['os'] == 'RedHat' %}
-    - name: /bin/systemctl platform-testing-cdh-blackbox
+    - name: /bin/systemctl start platform-testing-cdh-blackbox
 {% endif %}
     - require:
       - pip: platform-testing-cdh-install-requirements-cdh_blackbox
