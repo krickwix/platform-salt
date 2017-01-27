@@ -99,7 +99,7 @@ platform-testing-cdh-install-requirements-cdh_blackbox:
     - require:
       - virtualenv: platform-testing-cdh-create-venv
 
-platform-testing-cdh-backbox_upstart:
+platform-testing-cdh-blackbox_upstart:
   file.managed:
 {% if grains['os'] == 'Ubuntu' %}
     - source: salt://platform-testing/templates/platform-testing-cdh-blackbox.conf.tpl
