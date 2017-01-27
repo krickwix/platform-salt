@@ -1,5 +1,6 @@
 [Unit]
-SourcePath=/etc/init.d/opentsdb
+Description=opentsdb
+
 [Service]
-ExecStart=/etc/init.d/opentsdb start
-ExecStop=/etc/init.d/opentsdb stop
+Type=simple
+ExecStart=/usr/bin/tsdb tsd
