@@ -178,4 +178,6 @@ platform-testing-general-crontab-dm-blackbox:
     - name: /bin/systemctl start platform-testing-general-dm-blackbox
 {% endif %}
 
+{% endif %}
+
 
