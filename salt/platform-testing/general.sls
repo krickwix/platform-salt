@@ -81,11 +81,15 @@ platform-testing-general-install-requirements-kafka:
     - require:
       - virtualenv: platform-testing-general-create-venv
 
-{% if grains['os'] == 'Ubuntu' %}
 platform-testing-general-kafka_upstart:
   file.managed:
+{% if grains['os'] == 'Ubuntu' %}
     - source: salt://platform-testing/templates/platform-testing-general-kafka.conf.tpl
     - name: /etc/init/platform-testing-general-kafka.conf
+{% elif grains['os'] == 'RedHat' %}
+    - name: /usr/lib/systemd/system/platform-testing-general-kafka.service
+    - source: salt://platform-testing/templates/platform-testing-general-kafka.service.tpl
+{% endif %}
     - mode: 644
     - template: jinja
     - context:
@@ -94,29 +98,16 @@ platform-testing-general-kafka_upstart:
       console_hosts: {{ console_hosts }}
       kafka_brokers: {{ kafka_brokers }}
       kafka_zookeepers: {{ kafka_zookeepers }}
-{% elif grains['os'] == 'RedHat' %}
-platform-testing-general-kafka_systemd:
-  file.managed:
-    - name: /usr/lib/systemd/system/platform-testing-general-kafka.service
-    - source: salt://platform-testing/templates/platform-testing-general-kafka.service.tpl
-    - template: jinja
-    - context:
-      platform_testing_directory: {{ platform_testing_directory }}
-      platform_testing_package: {{ platform_testing_package }}
-      console_hosts: {{ console_hosts }}
-      kafka_brokers: {{ kafka_brokers }}
-      kafka_zookeepers: {{ kafka_zookeepers }}
-  module.run:
-    - name: service.systemctl_reload
-    - onchanges:
-      - file: platform-testing-general-kafka_systemd
-{% endif %}
 
 platform-testing-general-crontab-kafka:
   cron.present:
     - identifier: PLATFORM-TESTING-KAFKA
     - user: root
+{% if grains['os'] == 'Ubuntu' %}
     - name: /sbin/start platform-testing-general-kafka
+{% elif grains['os'] == 'RedHat' %}
+    - name: /bin/systemctl platform-testing-general-kafka
+{% endif %}
 
 platform-testing-general-install-requirements-zookeeper:
   pip.installed:
@@ -125,11 +116,15 @@ platform-testing-general-install-requirements-zookeeper:
     - require:
       - virtualenv: platform-testing-general-create-venv
 
-{% if grains['os'] == 'Ubuntu' %}
 platform-testing-general-zookeeper-upstart:
   file.managed:
+{% if grains['os'] == 'Ubuntu' %}
     - source: salt://platform-testing/templates/platform-testing-general-zookeeper.conf.tpl
     - name: /etc/init/platform-testing-general-zookeeper.conf
+{% elif grains['os'] == 'RedHat' %}
+    - name: /usr/lib/systemd/system/platform-testing-general-zookeeper.service
+    - source: salt://platform-testing/templates/platform-testing-general-zookeeper.service.tpl
+{% endif %}
     - mode: 644
     - template: jinja
     - context:
@@ -137,28 +132,16 @@ platform-testing-general-zookeeper-upstart:
       platform_testing_package: {{ platform_testing_package }}
       console_hosts: {{ console_hosts }}
       kafka_zookeepers: {{ kafka_zookeepers }}
-{% elif grains['os'] == 'RedHat' %}
-platform-testing-general-zookeeper_systemd:
-  file.managed:
-    - name: /usr/lib/systemd/system/platform-testing-general-zookeeper.service
-    - source: salt://platform-testing/templates/platform-testing-general-zookeeper.service.tpl
-    - template: jinja
-    - context:
-      platform_testing_directory: {{ platform_testing_directory }}
-      platform_testing_package: {{ platform_testing_package }}
-      console_hosts: {{ console_hosts }}
-      kafka_zookeepers: {{ kafka_zookeepers }}
-  module.run:
-    - name: service.systemctl_reload
-    - onchanges:
-      - file: platform-testing-general-zookeeper_systemd
-{% endif %}
 
 platform-testing-general-crontab-zookeeper:
   cron.present:
     - identifier: PLATFORM-TESTING-ZOOKEEPER
     - user: root
+{% if grains['os'] == 'Ubuntu' %}
     - name: /sbin/start platform-testing-general-zookeeper
+{% elif grains['os'] == 'RedHat' %}
+    - name: /bin/systemctl platform-testing-general-zookeeper
+{% endif %}
 
 {%- if dm_hosts is not none and dm_hosts|length > 0 %}
 platform-testing-general-install-requirements-dm-blackbox:
@@ -168,29 +151,15 @@ platform-testing-general-install-requirements-dm-blackbox:
     - require:
       - virtualenv: platform-testing-general-create-venv
 
-{% if grains['os'] == 'Ubuntu' %}
 platform-testing-general-dm-blackbox_upstart:
   file.managed:
+{% if grains['os'] == 'Ubuntu' %}
     - source: salt://platform-testing/templates/platform-testing-general-dm-blackbox.conf.tpl
     - name: /etc/init/platform-testing-general-dm-blackbox.conf
-    - mode: 644
-    - template: jinja
-    - context:
-      platform_testing_directory: {{ platform_testing_directory }}
-      platform_testing_package: {{ platform_testing_package }}
-      console_hosts: {{ console_hosts }}
-      dm_hosts: {{ dm_hosts }}
-
-platform-testing-general-crontab-dm-blackbox:
-  cron.present:
-    - identifier: PLATFORM-TESTING-DM-BLACKBOX
-    - user: root
-    - name: /sbin/start platform-testing-general-dm-blackbox
 {% elif grains['os'] == 'RedHat' %}
-platform-testing-general-dm-blackbox_systemd:
-  file.managed:
     - source: salt://platform-testing/templates/platform-testing-general-dm-blackbox.service.tpl
     - name: /usr/lib/systemd/system/platform-testing-general-dm-blackbox.service
+{%- endif %}
     - mode: 644
     - template: jinja
     - context:
@@ -198,11 +167,15 @@ platform-testing-general-dm-blackbox_systemd:
       platform_testing_package: {{ platform_testing_package }}
       console_hosts: {{ console_hosts }}
       dm_hosts: {{ dm_hosts }}
+
 platform-testing-general-crontab-dm-blackbox:
   cron.present:
     - identifier: PLATFORM-TESTING-DM-BLACKBOX
     - user: root
+{% if grains['os'] == 'Ubuntu' %}
+    - name: /sbin/start platform-testing-general-dm-blackbox
+{% elif grains['os'] == 'RedHat' %}
     - name: /bin/systemctl platform-testing-general-dm-blackbox
-{%- endif %}
+{% endif %}
 
-{%- endif %}
+

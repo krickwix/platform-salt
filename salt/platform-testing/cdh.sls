@@ -59,26 +59,15 @@ platform-testing-cdh-install-requirements-cdh:
     - require:
       - virtualenv: platform-testing-cdh-create-venv
 
-{% if grains['os'] == 'Ubuntu' %}
 platform-testing-cdh_upstart:
   file.managed:
+{% if grains['os'] == 'Ubuntu' %}
     - source: salt://platform-testing/templates/platform-testing-cdh.conf.tpl
     - name: /etc/init/platform-testing-cdh.conf
-    - mode: 644
-    - template: jinja
-    - context:
-      platform_testing_directory: {{ platform_testing_directory }}
-      platform_testing_package: {{ platform_testing_package }}
-      console_hoststring: {{ console_hoststring }}
-      cm_hoststring: {{ cm_hoststring }}
-      cm_port: {{ cm_port }}
-      cm_username: {{ cm_username }}
-      cm_password: {{ cm_password }}
 {% elif grains['os'] == 'RedHat' %}
-platform-testing-cdh_systemd:
-  file.managed:
     - source: salt://platform-testing/templates/platform-testing-cdh.service.tpl
     - name: /usr/lib/systemd/system/platform-testing-cdh.service
+{% endif %}
     - mode: 644
     - template: jinja
     - context:
@@ -89,20 +78,19 @@ platform-testing-cdh_systemd:
       cm_port: {{ cm_port }}
       cm_username: {{ cm_username }}
       cm_password: {{ cm_password }}
-{% endif %}
 
 platform-testing-cdh-crontab-cdh:
   cron.present:
     - identifier: PLATFORM-TESTING-CDH
     - user: root
+{% if grains['os'] == 'Ubuntu' %}
     - name: /sbin/start platform-testing-cdh
+{% elif grains['os'] == 'RedHat' %}
+    - name: /bin/systemctl platform-testing-cdh
+{% endif %}
     - require:
       - pip: platform-testing-cdh-install-requirements-cdh
-{% if grains['os'] == 'Ubuntu' %}
       - file: platform-testing-cdh_upstart
-{% elif grains['os'] == 'RedHat' %}
-      - file: platform-testing-cdh_systemd
-{% endif %}
 
 platform-testing-cdh-install-requirements-cdh_blackbox:
   pip.installed:
@@ -111,26 +99,15 @@ platform-testing-cdh-install-requirements-cdh_blackbox:
     - require:
       - virtualenv: platform-testing-cdh-create-venv
 
-{% if grains['os'] == 'Ubuntu' %}
 platform-testing-cdh-backbox_upstart:
   file.managed:
+{% if grains['os'] == 'Ubuntu' %}
     - source: salt://platform-testing/templates/platform-testing-cdh-blackbox.conf.tpl
     - name: /etc/init/platform-testing-cdh-blackbox.conf
-    - mode: 644
-    - template: jinja
-    - context:
-      platform_testing_directory: {{ platform_testing_directory }}
-      platform_testing_package: {{ platform_testing_package }}
-      console_hoststring: {{ console_hoststring }}
-      cm_hoststring: {{ cm_hoststring }}
-      cm_port: {{ cm_port }}
-      cm_username: {{ cm_username }}
-      cm_password: {{ cm_password }}
 {% elif grains['os'] == 'RedHat' %}
-platform-testing-cdh-blackbox_systemd:
-  file.managed:
     - source: salt://platform-testing/templates/platform-testing-cdh-blackbox.service.tpl
     - name: /usr/lib/systemd/system/platform-testing-cdh-blackbox.service
+{% endif %}
     - mode: 644
     - template: jinja
     - context:
@@ -141,17 +118,16 @@ platform-testing-cdh-blackbox_systemd:
       cm_port: {{ cm_port }}
       cm_username: {{ cm_username }}
       cm_password: {{ cm_password }}
-{% endif %}
 
 platform-testing-cdh-crontab-cdh_blackbox:
   cron.present:
     - identifier: PLATFORM-TESTING-CDH-BLACKBOX
     - user: root
+{% if grains['os'] == 'Ubuntu' %}
     - name: /sbin/start platform-testing-cdh-blackbox
+{% elif grains['os'] == 'RedHat' %}
+    - name: /bin/systemctl platform-testing-cdh-blackbox
+{% endif %}
     - require:
       - pip: platform-testing-cdh-install-requirements-cdh_blackbox
-{% if grains['os'] == 'Ubuntu' %}
       - file: platform-testing-cdh-blackbox_upstart
-{% elif grains['os'] == 'RedHat' %}
-      - file: platform-testing-cdh-blackbox_systemd
-{% endif %}
